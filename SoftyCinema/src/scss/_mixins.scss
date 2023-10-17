@@ -10,3 +10,15 @@
   grid-template-rows: $rows;
   gap: $gap;
 }
+@mixin button(){
+  @include flex(row, 0.25rem);
+  background: $primary_linear;
+  padding: 1rem;
+  border-radius: $base_radius;
+  font-size: 1.15rem;
+  height: 1.5rem;
+  color: white;
+  img {
+    height: 2.2rem;
+  }
+}

@@ -4,7 +4,6 @@ import Nav from "./componants/nav";
 function App() {
   const [query,setQuery] = useState("")
   const [results,setResults] = useState(0)
-  console.log(query)
   return (
     <div className="container">
       <Nav setQuery={setQuery} results={results}/>

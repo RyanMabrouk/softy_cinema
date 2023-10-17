@@ -3,14 +3,34 @@
   grid-template-columns: 50% 50%;
   grid-template-rows: 5% fit-content 5%;
   row-gap: 0.5rem;
-  &:hover {
-    cursor: pointer;
-    //transform: translateY(-0.25rem);
-    scale: 102%;
+  div:has(.blocks-wrapper) {
+    grid-column: 1 / span 2;
+  }
+  .blocks-wrapper {
+    @include flex();
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+  }
+  .watched_btn {
+    @include button();
+    padding: 0.65rem;
+    width: 100%;
+    &:hover {
+      cursor: pointer;
+      scale: 105%;
+    }
+    label {
+      @include flex(row, 0.5rem);
+      justify-content: center;
+      width: 100%;
+      cursor: pointer;
+    }
   }
   .poster,
   .time_date_container,
-  .title_rating_container {
+  .title_rating_container,
+  .watched_btn {
     grid-column: 1 / span 2;
   }
   .poster {
@@ -20,15 +40,19 @@
       height: 100%;
       width: 100%;
       border-radius: $base_radius;
+      &:hover {
+        cursor: pointer;
+        //transform: translateY(-0.25rem);
+        scale: 105%;
+      }
     }
   }
   .title_rating_container {
     @include flex(row, 1rem);
     justify-content: space-between;
     grid-row: 1;
-    height: max-content;     
-     align-content: flex-end;
-
+    height: max-content;
+    align-content: flex-end;
     .title {
       height: 100%;
       color: white;
@@ -43,6 +67,7 @@
     }
     img {
       height: 3.5rem;
+      margin-right: -1rem;
     }
   }
   .time_date_container {
