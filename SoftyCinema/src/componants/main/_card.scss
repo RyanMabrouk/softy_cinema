@@ -1,0 +1,59 @@
+.card_container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 5% fit-content 5%;
+  row-gap: 0.5rem;
+  &:hover {
+    cursor: pointer;
+    //transform: translateY(-0.25rem);
+    scale: 102%;
+  }
+  .poster,
+  .time_date_container,
+  .title_rating_container {
+    grid-column: 1 / span 2;
+  }
+  .poster {
+    height: 20rem;
+    grid-row: 2;
+    img {
+      height: 100%;
+      width: 100%;
+      border-radius: $base_radius;
+    }
+  }
+  .title_rating_container {
+    @include flex(row, 1rem);
+    justify-content: space-between;
+    grid-row: 1;
+    height: max-content;     
+     align-content: flex-end;
+
+    .title {
+      height: 100%;
+      color: white;
+      overflow: scroll;
+      display: inline-block;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .rating {
+      @include flex(row);
+      color: $yellow;
+    }
+    img {
+      height: 3.5rem;
+    }
+  }
+  .time_date_container {
+    @include flex(row);
+    justify-content: space-between;
+    grid-row: 3;
+    color: $grey;
+    font-size: 0.7rem;
+    .time,
+    .date {
+      @include flex(row, 0.5rem);
+    }
+  }
+}

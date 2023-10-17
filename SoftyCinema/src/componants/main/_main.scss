@@ -1,0 +1,31 @@
+main {
+  h1 {
+    margin: 1rem 0;
+    background: $primary_linear;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  section {
+    @include flex(row, 3rem);
+    .cards_container {
+      width: 100%;
+      justify-items: center;
+      .swiper-wrapper {
+        @include flex;
+        width: 100%;
+        height: 100%;
+        .swiper-slide {
+          object-fit: cover;
+          width: 13rem;
+        }
+      }
+      .swiper-pagination-bullet {
+        width: 0.8rem;
+        height: 0.8rem;
+      }
+      .swiper-pagination-bullets {
+        margin-bottom: -0.8rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+@use "sass:math";
+
+// importing partials
+@import "variables";
+@import "mixins";
+@import "breakpoints";
+
+/* reset styles */
+* {
+  color: inherit;
+  margin: 0;
+  padding: 0;
+  font-family: $myFont, sans-serif;
+  font-style: normal;
+  scroll-behavior: smooth;
+}
+*::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
+body {
+  background-color: $black;
+}
+ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+hr {
+  border: 0;
+  border-top: 1px dotted #efefef;
+}
+input[type="button"],
+input[type="radio"] {
+  display: none;
+}
+.container {
+  width: 100vw;
+  max-width: 95%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+/*----------------------------------------*/
+//Note responsive range (280px-2705px)
+// main scss
+@import "../componants/main/main.scss";
+@import "../componants/main/card.scss";
+@import "../componants/nav/nav.scss";
+/*----------------------------------------*/
