@@ -8,14 +8,12 @@ const options = {
 };
 export default async function fetchData(path) {
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3${path}`,
-      options
-    );
+    const res = await fetch(`https://api.themoviedb.org/3${path}`, options);
     const response = await res.json();
-    const data = await response.results;
-    return data;
+    const data = await response;
+    return data.results ? data.results : data;
   } catch (err) {
     console.error(err);
+    return err;
   }
 }

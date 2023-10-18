@@ -6,6 +6,7 @@
   div:has(.blocks-wrapper) {
     grid-column: 1 / span 2;
   }
+
   .blocks-wrapper {
     @include flex();
     justify-content: center;
@@ -15,7 +16,7 @@
   .watched_btn {
     @include button();
     padding: 0.65rem;
-    width: 100%;
+    width: 90%;
     &:hover {
       cursor: pointer;
       scale: 105%;
@@ -36,14 +37,15 @@
   .poster {
     height: 20rem;
     grid-row: 2;
+    overflow: hidden;
+    border-radius: $base_radius;
     img {
       height: 100%;
       width: 100%;
-      border-radius: $base_radius;
       &:hover {
         cursor: pointer;
-        //transform: translateY(-0.25rem);
-        scale: 105%;
+        scale: 110%;
+        transition:all 0.35s ease-in-out;
       }
     }
   }

@@ -10,7 +10,7 @@ import heart from "../../assets/heart.svg";
 import postData from "../Api/postData";
 
 export default function Card(props) {
-  const [watched, setWatched] = useState(false);
+  const [watched, setWatched] = useState(props.watched);
   const [loading, setLoading] = useState(false);
 
   async function toggleWatched(action) {
@@ -19,34 +19,12 @@ export default function Card(props) {
     if (res.success) {
       setWatched(action);
       props.refresh(action ? props.id : props.id + "del");
-      setLoading(false);  
+      setLoading(false);
       console.log(props.id, " changed");
     } else {
       console.error(res.error);
     }
   }
-  /*async function addWatched() {
-    setLoading(true);
-    const res = await postData(props.id, true);
-    if (res.success) {
-      setWatched(true);
-      await props.refresh(props.id).then(setLoading(false));
-      console.log(props.id, " added");
-    } else {
-      console.error(res.error);
-    }
-  }
-  async function removeWatched() {
-    setLoading(true);
-    const res = await postData(props.id, false);
-    if (res.success) {
-      setWatched(false);
-      await props.refresh(props.id + "del").then(setLoading(false));
-      console.log(props.id, " removed");
-    } else {
-      console.error(res.error);
-    }
-  }*/
   return (
     <div className="card_container">
       {loading ? (
@@ -63,7 +41,10 @@ export default function Card(props) {
             </div>
           </div>
           <div className="poster">
-            <img src={props.poster ? props.poster : no_poster} alt="" />
+            <label htmlFor={props.id + "poster"}>
+              <img src={props.poster ? props.poster : no_poster} alt="" />
+            </label>
+            <input type="button" id={props.id + "poster"} onClick={()=>{props.setCardClicked(props.id)}} />
           </div>
           <div className="time_date_container">
             <div className="time">
@@ -78,13 +59,20 @@ export default function Card(props) {
           {props.type !== "favorite" ? (
             <div className="watched_btn">
               <label htmlFor={props.id}>
-                Add Watched
-                <img src={heart} />
+                {watched ? (
+                  <>Watched!</>
+                ) : (
+                  <>
+                    Add Watched
+                    <img src={heart} />
+                  </>
+                )}
               </label>
               <input
                 type="button"
                 id={props.id}
                 onClick={() => toggleWatched(true)}
+                disabled={watched}
               />
             </div>
           ) : (
