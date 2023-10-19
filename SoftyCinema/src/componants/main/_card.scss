@@ -13,6 +13,12 @@
     align-content: center;
     width: 100%;
   }
+  .poster,
+  .time_date_container,
+  .title_rating_container,
+  .watched_btn {
+    grid-column: 1 / span 2;
+  }
   .watched_btn {
     @include button();
     padding: 0.65rem;
@@ -28,24 +34,35 @@
       cursor: pointer;
     }
   }
-  .poster,
-  .time_date_container,
-  .title_rating_container,
-  .watched_btn {
-    grid-column: 1 / span 2;
-  }
+
   .poster {
+    position: relative;
     height: 20rem;
     grid-row: 2;
     overflow: hidden;
     border-radius: $base_radius;
+    div {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      @include button();
+      padding: 0.4rem;
+      cursor: pointer;
+      z-index: 3;
+      &:hover span {
+        display: none;
+      }
+      &:hover:before {
+        content: "Delete";
+      }
+    }
     img {
       height: 100%;
       width: 100%;
       &:hover {
         cursor: pointer;
         scale: 110%;
-        transition:all 0.35s ease-in-out;
+        transition: all 0.35s ease-in-out;
       }
     }
   }

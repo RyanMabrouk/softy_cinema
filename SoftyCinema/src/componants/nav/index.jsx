@@ -16,16 +16,13 @@ export default function Nav(props) {
       />
       <div>
         {props.loading ? (
-          <>
-            Loading...
-            <img src={thunder} />
-          </>
+          <>Loading...</>
         ) : (
           <>
             Found<span> {props.results ? props.results : 0} </span>results
-            <img src={thunder} />
           </>
         )}
+        <img src={thunder} />
       </div>
     </nav>
   );

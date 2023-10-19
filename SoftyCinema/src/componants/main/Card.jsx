@@ -7,7 +7,8 @@ import date from "../../assets/date.svg";
 import star from "../../assets/star.svg";
 import no_poster from "../../assets/no-poster.png";
 import heart from "../../assets/heart.svg";
-
+import delete_icon from "../../assets/delete.svg";
+import deleteData from "../Api/deleteData";
 import postData from "../Api/postData";
 
 export default function Card(props) {
@@ -21,13 +22,28 @@ export default function Card(props) {
 
   async function toggleWatched(action) {
     setLoading(true);
-    const res = await postData(props.id, action);
+    const res = await postData(
+      {
+        media_type: "movie",
+        media_id: props.id,
+        favorite: action,
+      },
+      "/account/20285930/favorite"
+    );
     if (res.success) {
       setWatched(action);
-      async ()=>{}
       props.refresh(action ? props.id : props.id + "del");
       setLoading(false);
-      console.log(props.id, " changed");
+    } else {
+      console.error(res.error);
+    }
+  }
+  async function deleteRating() {
+    setLoading(true);
+    const res = await deleteData(`/movie/${props.id}/rating`);
+    if (res.success) {
+      props.setRefreshRated((old) => !old);
+      setLoading(false);
     } else {
       console.error(res.error);
     }
@@ -52,6 +68,23 @@ export default function Card(props) {
           <div className="poster">
             <label htmlFor={props.id + "poster"}>
               <img src={props.poster ? props.poster : no_poster} alt="" />
+              {props.userRating && (
+                <Tooltip
+                  placement="top"
+                  title={<span>You Rated This Movie {props.userRating}</span>}
+                >
+                  <label htmlFor={props.id + "del_rating"}>
+                    <div>
+                      <span>{props.userRating.toFixed(1)}</span>
+                    </div>
+                  </label>
+                  <input
+                    type="button"
+                    id={props.id + "del_rating"}
+                    onClick={deleteRating}
+                  />
+                </Tooltip>
+              )}
             </label>
             <input
               type="button"
@@ -90,7 +123,7 @@ export default function Card(props) {
                 disabled={watched}
               />
             </div>
-          ) : (
+          ) : props.userRating ? null : (
             <div className="watched_btn">
               <label htmlFor={props.id + "del"}>Delete</label>
               <input

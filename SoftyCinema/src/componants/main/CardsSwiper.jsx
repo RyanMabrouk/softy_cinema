@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { SwiperSlide } from "swiper/react";
 
 import Card from "./card";
@@ -8,14 +8,14 @@ import Loader from "../loader";
 export default function CardSwiper(props) {
   props.sort
     ? props.data?.sort((a, b) => {
-        return b.popularity - a.popularity;
+        return b[props.sort] - a[props.sort];
       })
     : props.data;
-  //console.log("data =" + (props.data ? props.data : "none"));
   const slides = props.data?.map((e) => {
     return (
       <SwiperSlide key={e.id}>
         <Card
+          //ELEMENT
           id={e.id}
           title={e.original_title}
           poster={
@@ -26,10 +26,13 @@ export default function CardSwiper(props) {
           time={"3:00:00"}
           date={e.release_date}
           rating={e.vote_average?.toFixed(1)}
+          userRating={e.rating}
+          //PROPS
           refresh={props.setRefresh}
           watched={props.fav_data?.map((e) => e.id).includes(e.id)}
           setCardClicked={props.setCardClicked}
           type={props.fav_data ? null : "favorite"}
+          setRefreshRated={props.setRefreshRated}
         />
       </SwiperSlide>
     );
@@ -53,7 +56,15 @@ export default function CardSwiper(props) {
               </h1>
             ) : props.name === "Movies" ? (
               <h1 className="no_results">
-                {props.loading ? <Loader /> : "Search For Something!"}
+                {props.loading ? (
+                  props.data?.length > 0 ? (
+                    <Loader />
+                  ) : (
+                    "Search For Something!"
+                  )
+                ) : (
+                  "Search For Something!"
+                )}
               </h1>
             ) : null
           }

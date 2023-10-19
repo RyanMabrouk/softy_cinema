@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
+import StarRatings from "react-star-ratings";
 
 import time from "../../assets/time.svg";
 import grey_star from "../../assets/grey_star.svg";
@@ -8,6 +9,7 @@ import close from "../../assets/close.svg";
 import fetchData from "../Api/fetchData";
 
 import Recommandations from "./Recommandations";
+import postData from "../Api/postData";
 
 export default function Details(props) {
   const [data, setData] = useState(null);
@@ -16,6 +18,9 @@ export default function Details(props) {
     setId(props.id);
   }
   //-------------------------------------
+  const [userRating, setUserRating] = useState(
+    props.ratedData?.find((e) => e.id === props.id)?.rating
+  );
   const [runtime, setRuntime] = useState(null);
   const [genres, setGenres] = useState([]);
   const [poster, setPoster] = useState(null);
@@ -30,11 +35,28 @@ export default function Details(props) {
       setData(await fetchData(`/movie/${String(id)}?language=en-US`));
     }
     getData();
-    console.log(id, " was selected ");
+    //console.log(id, " was selected ");
   }, [id, setId]);
-  //generating data
+  //UPDATE USER RATING
   useEffect(() => {
-    console.log(data);
+    if (props.ratedData?.find((e) => e.id === props.id)?.rating != userRating) {
+      async function upadteRating() {
+        const res = await postData(
+          {
+            value: userRating,
+          },
+          `/movie/${props.id}/rating`
+        );
+        if (res.success) {
+          console.log("success");
+          props.setRefreshRated((old)=>!old);
+        }
+      }
+      upadteRating();
+    }
+  }, [userRating, setUserRating]);
+  //DATA
+  useEffect(() => {
     if (data) {
       setRuntime(data.runtime);
       setGenres(
@@ -66,7 +88,21 @@ export default function Details(props) {
         }}
       >
         <div className="right_container">
-          <div className="title">{title}</div>
+          <div className="title">
+            {title}
+            <div card="user_rating">
+              <StarRatings
+                rating={userRating}
+                starRatedColor="yellow"
+                starHoverColor="yellow"
+                changeRating={setUserRating}
+                numberOfStars={10}
+                name="rating"
+                starDimension="15px"
+                starSpacing="1px"
+              />
+            </div>
+          </div>
           <div className="runtime">
             <img src={time} alt="" />
             <span>{runtime + " minutes"}</span>

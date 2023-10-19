@@ -7,6 +7,9 @@ nav {
   }
   div {
     @include button();
+    @include flex();
+    width: 11rem;
+    justify-content: space-between;
   }
   .search {
     justify-self: center;
