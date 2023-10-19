@@ -17,14 +17,12 @@ export default function Main(props) {
   const [refresh, setRefresh] = useState(null);
   const [refreshRated, setRefreshRated] = useState(false);
   const dibouncedRefreshRated = useDebounce(refreshRated,1000)
-  console.log("🚀 ~ file: index.jsx:18 ~ Main ~ refreshRated:", refreshRated);
   //SYNC QUERY
   const [query, setQuery] = useState(props.query);
   const dibouncedQuery = useDebounce(query, 500);
   if (props.query !== query) {
     setQuery(props.query);
   }
-
   //Number of results
   props.setResults(data?.length);
   useEffect(() => {
@@ -56,7 +54,6 @@ export default function Main(props) {
         )
       );
     }
-    console.log("fetching...")
     getData();
   }, [dibouncedRefreshRated]);
   //console.log(data ? data : null);

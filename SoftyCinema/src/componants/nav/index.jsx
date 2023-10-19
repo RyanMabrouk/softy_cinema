@@ -1,7 +1,8 @@
-import React from "react";
+import React ,{useRef} from "react";
 import logo from "../../assets/logo.svg";
 import thunder from "../../assets/thunder.svg";
 export default function Nav(props) {
+  const searchInput = useRef(null);
   function handleChange(e) {
     props.setQuery(e.target.value);
   }
@@ -13,6 +14,13 @@ export default function Nav(props) {
         type="text"
         placeholder="Search"
         onChange={handleChange}
+        onKeyPress={(e) => {
+          if (e.key === "Enter") {
+            searchInput.current.blur(); // removing focus
+          }
+        }}
+        ref={searchInput}
+        autoFocus
       />
       <div>
         {props.loading ? (

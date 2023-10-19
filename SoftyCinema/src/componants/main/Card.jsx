@@ -69,21 +69,26 @@ export default function Card(props) {
             <label htmlFor={props.id + "poster"}>
               <img src={props.poster ? props.poster : no_poster} alt="" />
               {props.userRating && (
-                <Tooltip
-                  placement="top"
-                  title={<span>You Rated This Movie {props.userRating}</span>}
-                >
+                <>
                   <label htmlFor={props.id + "del_rating"}>
-                    <div>
-                      <span>{props.userRating.toFixed(1)}</span>
-                    </div>
+                    {" "}
+                    <Tooltip
+                      placement="top"
+                      title={
+                        <span>You Rated This Movie {props.userRating}</span>
+                      }
+                    >
+                      <div>
+                        <span>{props.userRating.toFixed(1)}</span>
+                      </div>
+                    </Tooltip>
                   </label>
                   <input
                     type="button"
                     id={props.id + "del_rating"}
                     onClick={deleteRating}
                   />
-                </Tooltip>
+                </>
               )}
             </label>
             <input

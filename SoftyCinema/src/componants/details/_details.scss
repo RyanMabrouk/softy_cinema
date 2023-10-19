@@ -8,10 +8,11 @@
   z-index: 2;
   transform: translateX(100vw);
   transition: transform 2s ease-in-out;
+  //animation: 3s ease-in 1s infinite both running;
   &_visible {
     transform: translateX(10vw);
     transition: transform 2s ease-in-out;
-    animation: 0.5s linear 1s;
+    //animation: 0.5s linear 1s;
   }
   .poster {
     width: 100%;

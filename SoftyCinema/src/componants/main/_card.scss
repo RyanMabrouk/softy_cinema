@@ -26,6 +26,10 @@
     &:hover {
       cursor: pointer;
       scale: 105%;
+      img{
+        //background-color: white;
+        border-radius: 50%;
+      }
     }
     label {
       @include flex(row, 0.5rem);

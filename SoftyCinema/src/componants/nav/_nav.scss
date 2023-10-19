@@ -7,9 +7,9 @@ nav {
   }
   div {
     @include button();
-    @include flex();
     width: 11rem;
     justify-content: space-between;
+    gap: 0.1rem;
   }
   .search {
     justify-self: center;
@@ -20,7 +20,7 @@ nav {
     width: 35rem;
     height: 1.5rem;
     transition: all 0.3s;
-    opacity: 0.1;
+    opacity: 0.15;
     &::placeholder {
       color: $grey;
     }

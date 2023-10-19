@@ -49,7 +49,7 @@ export default function Details(props) {
         );
         if (res.success) {
           console.log("success");
-          props.setRefreshRated((old)=>!old);
+          props.setRefreshRated((old) => !old);
         }
       }
       upadteRating();
@@ -80,11 +80,15 @@ export default function Details(props) {
       <img className="poster" src={poster ? poster : no_poster} alt="" />
       <div
         style={{
-          backgroundImage:
-            "url(" +
-            "https://image.tmdb.org/t/p/original" +
-            data?.backdrop_path +
-            ")",
+          backgroundImage: data?.backdrop_path
+            ? "url(" +
+              "https://image.tmdb.org/t/p/original" +
+              data.backdrop_path +
+              ")"
+            : "url(" +
+              "https://image.tmdb.org/t/p/original" +
+              data?.poster_path +
+              ")",
         }}
       >
         <div className="right_container">
