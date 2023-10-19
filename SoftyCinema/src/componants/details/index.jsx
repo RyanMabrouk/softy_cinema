@@ -6,8 +6,8 @@ import no_poster from "../../assets/no-poster.png";
 import close from "../../assets/close.svg";
 
 import fetchData from "../Api/fetchData";
-import Swiper from "../CustomSwiper";
-import { SwiperSlide } from "swiper/react";
+
+import Recommandations from "./Recommandations";
 
 export default function Details(props) {
   const [data, setData] = useState(null);
@@ -16,7 +16,6 @@ export default function Details(props) {
     setId(props.id);
   }
   //-------------------------------------
-  const [recommendationsData, setRecommendationsData] = useState(null);
   const [runtime, setRuntime] = useState(null);
   const [genres, setGenres] = useState([]);
   const [poster, setPoster] = useState(null);
@@ -29,11 +28,6 @@ export default function Details(props) {
   useEffect(() => {
     async function getData() {
       setData(await fetchData(`/movie/${String(id)}?language=en-US`));
-      setRecommendationsData(
-        await fetchData(
-          `/movie/${String(id)}/recommendations?language=en-US&page=1`
-        )
-      );
     }
     getData();
     console.log(id, " was selected ");
@@ -59,31 +53,6 @@ export default function Details(props) {
       setPlot(data.overview);
     }
   }, [data, setData]);
-
-  const recommendationsSlides = recommendationsData?.map((e) => {
-    return (
-      <SwiperSlide key={e.id + "rec"}>
-        <label className="recommandations" htmlFor={e.id + "recommanded"}>
-          <img
-            src={
-              e.poster_path
-                ? "https://image.tmdb.org/t/p/original" + e.poster_path
-                : no_poster
-            }
-            alt=""
-          />
-          <p>{e.title}</p>
-        </label>
-        <input
-          type="button"
-          id={e.id + "recommanded"}
-          onClick={() => {
-            props.setCardClicked(e.id);
-          }}
-        />
-      </SwiperSlide>
-    );
-  });
   return (
     <div className={props.className ? props.className : "details_container"}>
       <img className="poster" src={poster ? poster : no_poster} alt="" />
@@ -134,18 +103,7 @@ export default function Details(props) {
               onClick={() => props.setCardClicked(null)}
             />
           </div>
-          {recommendationsData?.length>0 && (
-            <div className="recommandations_container">
-              Recommandations
-              <br />
-              <Swiper
-                slides={recommendationsSlides}
-                navigation={true}
-                slidesPerView="auto"
-                spaceBetween="10"
-              />
-            </div>
-          )}
+          <Recommandations setCardClicked={props.setCardClicked} id={id} />
         </div>
       </div>
     </div>
