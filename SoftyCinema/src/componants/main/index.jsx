@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import CardSwiper from "./CardsSwiper";
-import fetchData from "../Api/fetchData";
+import fetchData from "../../Api/fetchData";
 import useDebounce from "../../hooks/useDibounce";
 import Details from "../details";
 

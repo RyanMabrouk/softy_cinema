@@ -6,7 +6,6 @@
   div:has(.blocks-wrapper) {
     grid-column: 1 / span 2;
   }
-
   .blocks-wrapper {
     @include flex();
     justify-content: center;

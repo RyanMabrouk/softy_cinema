@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import fetchData from "../Api/fetchData";
+import fetchData from "../../Api/fetchData";
 import { SwiperSlide } from "swiper/react";
 import Swiper from "../CustomSwiper";
 

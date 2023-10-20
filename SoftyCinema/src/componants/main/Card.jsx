@@ -8,8 +8,8 @@ import star from "../../assets/star.svg";
 import no_poster from "../../assets/no-poster.png";
 import heart from "../../assets/heart.svg";
 import delete_icon from "../../assets/delete.svg";
-import deleteData from "../Api/deleteData";
-import postData from "../Api/postData";
+import deleteData from "../../Api/deleteData";
+import postData from "../../Api/postData";
 
 export default function Card(props) {
   //---------------------

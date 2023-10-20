@@ -6,10 +6,9 @@ import grey_star from "../../assets/grey_star.svg";
 import no_poster from "../../assets/no-poster.png";
 import close from "../../assets/close.svg";
 
-import fetchData from "../Api/fetchData";
-
+import fetchData from "../../Api/fetchData";
 import Recommandations from "./Recommandations";
-import postData from "../Api/postData";
+import postData from "../../Api/postData";
 
 export default function Details(props) {
   const [data, setData] = useState(null);

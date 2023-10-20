@@ -16,7 +16,7 @@
   }
   .poster {
     width: 100%;
-    height: 100%;
+    height: 82.5vh;
     border-top-left-radius: $base_radius;
     border-bottom-left-radius: $base_radius;
   }
@@ -28,13 +28,12 @@
     border-top-right-radius: $base_radius;
     border-bottom-right-radius: $base_radius;
     width: 100%;
-    height: 74.85vh;
+    height: 75.25vh;
   }
   .right_container {
-    @include grid(auto auto, 20% auto auto auto auto, 1rem);
-    //width: 100%;
+    @include grid(auto auto, 20% auto auto auto auto, 0.5rem);
+    width: 100%;
     height: 100%;
-    flex-basis: 100%;
     padding: 2rem 1rem;
     color: white;
     backdrop-filter: brightness(0.2) blur(4px);
@@ -86,6 +85,13 @@
     .plot {
       grid-row: 4;
       grid-column: 1 / span 2;
+      max-height: 22vh;
+      p {
+        text-overflow: ellipsis;
+        overflow: scroll;
+        display: inline-block;
+        overflow: scroll;
+      }
     }
     .recommandations_container {
       width: 50vw;
@@ -104,6 +110,7 @@
           text-overflow: ellipsis;
           overflow: hidden;
           font-size: 0.7rem;
+          text-align: center;
         }
         img {
           width: 100%;
