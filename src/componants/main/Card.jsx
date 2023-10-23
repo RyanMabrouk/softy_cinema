@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Loader from "../loader";
+import Loader from "../Loader";
 import { Tooltip } from "antd";
 
 import time from "../../assets/time.svg";
