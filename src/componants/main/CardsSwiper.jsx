@@ -1,7 +1,7 @@
 import React from "react";
 import { SwiperSlide } from "swiper/react";
 
-import Card from "./card";
+import Card from "./Card";
 import Swiper from "../CustomSwiper";
 import Loader from "../loader";
 
