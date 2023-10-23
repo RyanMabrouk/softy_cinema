@@ -3,7 +3,7 @@ import { SwiperSlide } from "swiper/react";
 
 import Card from "./Card";
 import Swiper from "../CustomSwiper";
-import Loader from "../loader";
+import Loader from "../Loader";
 
 export default function CardSwiper(props) {
   props.sort
