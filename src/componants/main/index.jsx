@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useContext } from "react";
 import SearchContext from "../../Context/SearchContext.jsx";
 
@@ -8,7 +8,6 @@ import Details from "../details";
 export default function Main() {
   const { searchData, favoriteData, ratedData, cardClicked } =
     useContext(SearchContext);
-  //SELECT
   return (
     <main>
       <CardSwiper
@@ -18,7 +17,7 @@ export default function Main() {
         sort={"popularity"}
         type={"search"}
       />
-      <CardSwiper key={2} name={"Favorites"} data={favoriteData} type={"list"}/>
+      <CardSwiper key={2} name={"Favorite"} data={favoriteData} type={"list"} />
       <CardSwiper
         key={3}
         name={"Rated Movies"}

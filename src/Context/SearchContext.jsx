@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useMemo } from "react";
 import useData from "../hooks/useData";
 
 const SearchContext = createContext();
@@ -12,8 +12,7 @@ export function Context(props) {
     query,
     500
   );
-
-  const [favoriteData, refreshFavorite] = useData(
+  const [favoriteData, refreshFavorite, loadingFav] = useData(
     `/account/20285930/favorite/movies?language=en-US&page=1&sort_by=created_at.asc`
   );
   const [ratedData, refreshRated] = useData(
@@ -21,6 +20,7 @@ export function Context(props) {
     null,
     1000
   );
+
   return (
     <SearchContext.Provider
       value={{

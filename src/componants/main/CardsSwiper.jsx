@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, memo } from "react";
 import { SwiperSlide } from "swiper/react";
 
 import Card from "./Card/Card";
 import Swiper from "../CustomSwiper";
-import Loader from "../Loader";
 import SearchContext from "../../Context/SearchContext";
+import { SearchMessage } from "./SearchMessage";
 
-export default function CardSwiper(props) {
-  const { favoriteData, query, loading } = useContext(SearchContext);
+export default memo(function CardSwiper(props) {
+  const { favoriteData } = useContext(SearchContext);
   props.sort
     ? props.data?.sort((a, b) => {
         return b[props.sort] - a[props.sort];
@@ -46,25 +46,9 @@ export default function CardSwiper(props) {
         <Swiper
           className={"cards_container"}
           slides={
-            slides?.length > 0 ? (
-              slides
-            ) : query?.length > 0 ? (
-              <h1 className="no_results">
-                {loading ? <Loader /> : "No Results"}
-              </h1>
-            ) : props.type === "search" ? (
-              <h1 className="no_results">
-                {loading ? (
-                  props.data?.length > 0 ? (
-                    <Loader />
-                  ) : (
-                    "Search For Something!"
-                  )
-                ) : (
-                  "Search For Something!"
-                )}
-              </h1>
-            ) : null
+            slides?.length > 0
+              ? slides
+              : props.type === "search" && <SearchMessage />
           }
           navigation={true}
           slidesPerView="auto"
@@ -72,4 +56,4 @@ export default function CardSwiper(props) {
       </section>
     </>
   );
-}
+});
