@@ -11,14 +11,14 @@ export default function useData(url, query = null, delay = 0) {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     async function getData() {
-      try {
-        setLoading(true);
-        setData(await fetchData(url));
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
+        try {
+          setLoading(true);
+          setData(await fetchData(url));
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setLoading(false);
+        }
     }
     getData();
   }, [dibouncedQuery, dibouncedRefresh]);
