@@ -1,10 +1,15 @@
-import React ,{useRef} from "react";
+import React, { useRef } from "react";
+import { useContext } from "react";
+import SearchContext from "../../Context/SearchContext.jsx";
+
 import logo from "../../assets/logo.svg";
 import thunder from "../../assets/thunder.svg";
-export default function Nav(props) {
+
+export default function Nav() {
+  const { loading, searchData, setQuery } = useContext(SearchContext);
   const searchInput = useRef(null);
   function handleChange(e) {
-    props.setQuery(e.target.value);
+    setQuery(e.target.value);
   }
   return (
     <nav>
@@ -23,11 +28,11 @@ export default function Nav(props) {
         autoFocus
       />
       <div>
-        {props.loading ? (
+        {loading ? (
           <>Loading...</>
         ) : (
           <>
-            Found<span> {props.results ? props.results : 0} </span>results
+            Found<span> {searchData ? searchData.length : 0} </span>results
           </>
         )}
         <img src={thunder} />

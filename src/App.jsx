@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import Main from "./componants/main";
 import Nav from "./componants/nav";
+import { Context } from "./Context/SearchContext.jsx";
 
 function App() {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState(0);
-  const [loading, setLoading] = useState(false);
-
   return (
     <div className="container">
-      <Nav setQuery={setQuery} results={results} loading={loading} />
-      <Main query={query} setResults={setResults} setLoading={setLoading} loading={loading} />
+      <Context>
+        <Nav />
+        <Main />
+      </Context>
     </div>
   );
 }

@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { SwiperSlide } from "swiper/react";
 
-import Card from "./Card";
+import Card from "./Card/Card";
 import Swiper from "../CustomSwiper";
 import Loader from "../Loader";
+import SearchContext from "../../Context/SearchContext";
 
 export default function CardSwiper(props) {
+  const { favoriteData, query, loading } = useContext(SearchContext);
   props.sort
     ? props.data?.sort((a, b) => {
         return b[props.sort] - a[props.sort];
@@ -27,12 +29,8 @@ export default function CardSwiper(props) {
           date={e.release_date}
           rating={e.vote_average?.toFixed(1)}
           userRating={e.rating}
-          //PROPS
-          refresh={props.setRefresh}
-          watched={props.fav_data?.map((e) => e.id).includes(e.id)}
-          setCardClicked={props.setCardClicked}
-          type={props.fav_data ? null : "favorite"}
-          setRefreshRated={props.setRefreshRated}
+          watched={favoriteData?.map((e) => e.id).includes(e.id)}
+          type={props.type}
         />
       </SwiperSlide>
     );
@@ -50,13 +48,13 @@ export default function CardSwiper(props) {
           slides={
             slides?.length > 0 ? (
               slides
-            ) : props.query?.length > 0 ? (
+            ) : query?.length > 0 ? (
               <h1 className="no_results">
-                {props.loading ? <Loader /> : "No Results"}
+                {loading ? <Loader /> : "No Results"}
               </h1>
-            ) : props.name === "Movies" ? (
+            ) : props.type === "search" ? (
               <h1 className="no_results">
-                {props.loading ? (
+                {loading ? (
                   props.data?.length > 0 ? (
                     <Loader />
                   ) : (

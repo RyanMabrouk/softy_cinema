@@ -1,25 +1,18 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
-import StarRatings from "react-star-ratings";
+import React, { useContext, useEffect, useState } from "react";
 
 import time from "../../assets/time.svg";
 import grey_star from "../../assets/grey_star.svg";
 import no_poster from "../../assets/no-poster.png";
 import close from "../../assets/close.svg";
 
-import fetchData from "../../Api/fetchData";
 import Recommandations from "./Recommandations";
-import postData from "../../Api/postData";
+import SearchContext from "../../Context/SearchContext";
+import useData from "../../hooks/useData";
+import { Stars } from "./Stars";
 
 export default function Details(props) {
-  const [data, setData] = useState(null);
-  const [id, setId] = useState(props.id);
-  if (id !== props.id) {
-    setId(props.id);
-  }
+  const { setCardClicked, cardClicked } = useContext(SearchContext);
   //-------------------------------------
-  const [userRating, setUserRating] = useState(
-    props.ratedData?.find((e) => e.id === props.id)?.rating
-  );
   const [runtime, setRuntime] = useState(null);
   const [genres, setGenres] = useState([]);
   const [poster, setPoster] = useState(null);
@@ -27,84 +20,52 @@ export default function Details(props) {
   const [rating, setRating] = useState(null);
   const [date, setDate] = useState(null);
   const [plot, setPlot] = useState(null);
+  const [backgroundImage, setBackgroundImage] = useState(null);
   //-------------------------------------
-
+  const [movieData] = useData(
+    `/movie/${String(cardClicked)}?language=en-US`,
+    cardClicked
+  );
+  //--------------------DATA------------------------
   useEffect(() => {
-    async function getData() {
-      setData(await fetchData(`/movie/${String(id)}?language=en-US`));
-    }
-    getData();
-    //console.log(id, " was selected ");
-  }, [id, setId]);
-  //UPDATE USER RATING
-  useEffect(() => {
-    if (props.ratedData?.find((e) => e.id === props.id)?.rating != userRating) {
-      async function upadteRating() {
-        const res = await postData(
-          {
-            value: userRating,
-          },
-          `/movie/${props.id}/rating`
-        );
-        if (res.success) {
-          console.log("success");
-          props.setRefreshRated((old) => !old);
-        }
-      }
-      upadteRating();
-    }
-  }, [userRating, setUserRating]);
-  //DATA
-  useEffect(() => {
-    if (data) {
-      setRuntime(data.runtime);
+    if (movieData) {
+      setRuntime(movieData.runtime);
       setGenres(
-        data.genres.map((e) => {
+        movieData.genres.map((e) => {
           return e.name;
         })
       );
       setPoster(
-        data.poster_path
-          ? "https://image.tmdb.org/t/p/original" + data.poster_path
+        movieData.poster_path
+          ? "https://image.tmdb.org/t/p/original" + movieData.poster_path
           : null
       );
-      setTitle(data.original_title);
-      setRating(data.vote_average?.toFixed(1));
-      setDate(data.release_date);
-      setPlot(data.overview);
+      setBackgroundImage(
+        movieData?.backdrop_path
+          ? "url(" +
+              "https://image.tmdb.org/t/p/original" +
+              movieData.backdrop_path +
+              ")"
+          : "url(" + poster + ")"
+      );
+      setTitle(movieData.original_title);
+      setRating(movieData.vote_average?.toFixed(1));
+      setDate(movieData.release_date);
+      setPlot(movieData.overview);
     }
-  }, [data, setData]);
+  }, [movieData]);
   return (
     <div className={props.className ? props.className : "details_container"}>
       <img className="poster" src={poster ? poster : no_poster} alt="" />
       <div
         style={{
-          backgroundImage: data?.backdrop_path
-            ? "url(" +
-              "https://image.tmdb.org/t/p/original" +
-              data.backdrop_path +
-              ")"
-            : "url(" +
-              "https://image.tmdb.org/t/p/original" +
-              data?.poster_path +
-              ")",
+          backgroundImage: backgroundImage,
         }}
       >
         <div className="right_container">
           <div className="title">
             {title}
-            <div card="user_rating">
-              <StarRatings
-                rating={userRating}
-                starRatedColor="yellow"
-                starHoverColor="yellow"
-                changeRating={setUserRating}
-                numberOfStars={10}
-                name="rating"
-                starDimension="15px"
-                starSpacing="1px"
-              />
-            </div>
+            <Stars />
           </div>
           <div className="runtime">
             <img src={time} alt="" />
@@ -139,10 +100,10 @@ export default function Details(props) {
             <input
               type="button"
               id="close"
-              onClick={() => props.setCardClicked(null)}
+              onClick={() => setCardClicked(null)}
             />
           </div>
-          <Recommandations setCardClicked={props.setCardClicked} id={id} />
+          <Recommandations />
         </div>
       </div>
     </div>

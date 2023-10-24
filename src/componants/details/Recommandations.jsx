@@ -1,23 +1,16 @@
-import React, { useEffect, useState } from "react";
-import fetchData from "../../Api/fetchData";
+import React, { useContext } from "react";
 import { SwiperSlide } from "swiper/react";
 import Swiper from "../CustomSwiper";
 
 import no_poster from "../../assets/no-poster.png";
+import SearchContext from "../../Context/SearchContext";
+import useData from "../../hooks/useData";
 
-
-export default function Recommandations(props) {
-  const [recommendationsData, setRecommendationsData] = useState(null);
-  useEffect(() => {
-    async function getData() {
-      setRecommendationsData(
-        await fetchData(
-          `/movie/${String(props.id)}/recommendations?language=en-US&page=1`
-        )
-      );
-    }
-    getData();
-  }, []);
+export default function Recommandations() {
+  const { cardClicked, setCardClicked } = useContext(SearchContext);
+  const [recommendationsData] = useData(
+    `/movie/${String(cardClicked)}/recommendations?language=en-US&page=1`
+  );
   const recommendationsSlides = recommendationsData?.map((e) => {
     return (
       <SwiperSlide key={e.id + "rec"}>
@@ -36,7 +29,7 @@ export default function Recommandations(props) {
           type="button"
           id={e.id + "recommanded"}
           onClick={() => {
-            props.setCardClicked(e.id);
+            setCardClicked(e.id);
           }}
         />
       </SwiperSlide>
