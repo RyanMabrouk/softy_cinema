@@ -53,7 +53,7 @@ export default function LogIn() {
     }
   }, []);
 
-  //--------------------------------
+  //--------------Sync session id------------------
   useEffect(() => {
     const session_id = localStorage.getItem("sessionId");
     if (session_id !== null) {
@@ -73,7 +73,7 @@ export default function LogIn() {
       console.error(err);
     }
   }
-  //------------------------------
+  //------------Form management------------------
   const handleSubmitForm = async (loginFormikForm) => {
     const { user, password } = loginFormikForm.values;
     console.log("click");
