@@ -1,5 +1,5 @@
 import React from "react";
-import heart from "../../../assets/heart.svg";
+import heart from "../../assets/heart.svg";
 
 export function Button(props) {
   return (

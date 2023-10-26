@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import StarRatings from "react-star-ratings";
-import postData from "../../Api/postData";
-import SearchContext from "../../Context/SearchContext";
+import SearchContext from "../../../../Context/SearchContext";
+import UserContext from "../../../../Context/UserContext";
+import postData from "../../../../Api/postData";
+
 
 export function Stars() {
   const { cardClicked, ratedData, refreshRated } = useContext(SearchContext);
-  const [userRating, setUserRating] = useState(
-    ratedData?.find((e) => e.id === cardClicked)?.rating
-  );
+  const { sessionId } = useContext(UserContext);
+  const [userRating, setUserRating] = useState(null);
   useEffect(() => {
     async function upadteRating() {
       if (userRating) {
@@ -16,7 +17,8 @@ export function Stars() {
             {
               value: userRating,
             },
-            `/movie/${cardClicked}/rating`
+            `/movie/${cardClicked}/rating`,
+            sessionId
           );
           if (res.success) {
             console.log("success");
@@ -32,7 +34,9 @@ export function Stars() {
   return (
     <div card="user_rating">
       <StarRatings
-        rating={userRating}
+        rating={
+          userRating || ratedData?.find((e) => e.id === cardClicked)?.rating
+        }
         starRatedColor="yellow"
         starHoverColor="yellow"
         changeRating={setUserRating}

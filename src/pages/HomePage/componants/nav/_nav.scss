@@ -5,11 +5,20 @@ nav {
   .logo {
     width: 17rem;
   }
-  div {
+  div:has(.indicator){
+    @include flex(row,2rem);
+  }
+  .indicator {
     @include button();
     width: 11rem;
     justify-content: space-between;
     gap: 0.1rem;
+  }
+  .logout {
+    @include button();
+    height: 3rem;
+    border: none;
+    cursor: pointer;
   }
   .search {
     justify-self: center;

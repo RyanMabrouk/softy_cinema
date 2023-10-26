@@ -1,18 +1,19 @@
 import React, { useContext, useState } from "react";
-import Loader from "../../Loader";
+import Loader from "../../../Loader";
 import { Tooltip } from "antd";
 
-import time from "../../../assets/time.svg";
-import date from "../../../assets/date.svg";
-import star from "../../../assets/star.svg";
-import postData from "../../../Api/postData";
-import SearchContext from "../../../Context/SearchContext";
+import time from "../../assets/time.svg";
+import date from "../../assets/date.svg";
+import star from "../../assets/star.svg";
 import { Button } from "./Button";
 import { Poster } from "./Poster";
+import UserContext from "../../../../Context/UserContext";
+import SearchContext from "../../../../Context/SearchContext";
+import postData from "../../../../Api/postData";
 
 export default function Card(props) {
-  const { refreshSearch, refreshFavorite, favoriteData } =
-    useContext(SearchContext);
+  const { sessionId } = useContext(UserContext);
+  const { refreshSearch, refreshFavorite } = useContext(SearchContext);
   const [watched, setWatched] = useState(props.watched);
   const [loading, setLoading] = useState(false);
   if (watched !== props.watched) {
@@ -27,7 +28,8 @@ export default function Card(props) {
           media_id: props.id,
           favorite: action,
         },
-        "/account/20285930/favorite"
+        `/account/20285930/favorite`,
+        sessionId
       );
       if (res.success) {
         setWatched(action);

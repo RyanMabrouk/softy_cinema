@@ -1,0 +1,150 @@
+.log_in_conatiner {
+  @include flex(row, 10rem);
+  align-content: center;
+  height: 95vh;
+  justify-content: space-evenly;
+  width: 100%;
+  .left_container {
+    @include flex(column);
+    align-items: flex-start;
+    h1 {
+      margin: 0;
+    }
+    .sub_title {
+      font-size: 2.5rem;
+      margin-bottom: -2rem;
+    }
+    .title {
+      font-size: 6rem;
+    }
+  }
+  div:has(.right_container) {
+    position: relative;
+    .circle {
+      position: absolute;
+      background: $secondary_linear;
+      clip-path: circle(50% at 50% 50%);
+      z-index: 1;
+    }
+    .circle1 {
+      width: 18em;
+      height: 18rem;
+      top: -3rem;
+      left: -9rem;
+    }
+    .circle2 {
+      width: 13em;
+      height: 13rem;
+      bottom: -4rem;
+      right: -4rem;
+    }
+  }
+  .right_container {
+    position: relative;
+    @include grid(auto, 10% auto, 3rem);
+    margin: auto 0;
+    height: 40rem;
+    color: $form_font_color !important;
+    font-weight: 300;
+    align-self: center;
+    align-items: flex-start;
+    border: 1px solid var(--Glass1-Stroke-Carey, #afafaf);
+    border-radius: $form_radius;
+    width: fit-content;
+    backdrop-filter: blur(26.5px);
+    box-shadow: -8px 4px 5px 0px rgba(0, 0, 0, 0.24);
+    padding: 0 3rem;
+    padding-top: 6rem;
+    padding-bottom: 2rem;
+    line-height: normal;
+    font-style: normal;
+    z-index: 2;
+    strong {
+      cursor: pointer;
+    }
+    form {
+      @include flex(column);
+      height: 12rem;
+      width: 100%;
+    }
+    header {
+      width: 100%;
+      @include flex(column);
+      justify-content: flex-start;
+      align-items: flex-start;
+      z-index: 2;
+    }
+    h1 {
+      margin-top: 0rem;
+      z-index: 2;
+    }
+    button {
+      @include button();
+      width: 20rem;
+      justify-content: center;
+      height: 4rem;
+      align-self: center;
+      margin: 2rem 0;
+      cursor: pointer;
+      &:hover {
+        scale: 105%;
+        transition: all 0.2s linear;
+      }
+    }
+    .title {
+      font-size: 2.5rem;
+      text-align: left;
+    }
+    .signup {
+      align-self: center;
+    }
+    .terms_and_conditions {
+      @include flex(row, 2rem);
+    }
+
+    .or {
+      @include flex(row, 2rem);
+      align-self: center;
+      margin: 2rem 0;
+      color: $form-grey;
+      hr {
+        height: 0.1rem;
+        width: 10rem;
+        background-color: $form-grey;
+      }
+    }
+    footer {
+      @include flex(column, 1.5rem);
+      align-self: flex-end;
+      justify-self: center;
+      .guest {
+        align-self: center;
+      }
+    }
+    .guest {
+      align-self: center;
+    }
+    .MuiFormControl-root {
+      border-color: $form_font_color;
+      border-radius: $base_radius;
+      height: 5rem;
+      z-index: 2;
+      label {
+        color: $form_font_color !important;
+      }
+      input {
+        height: 2.5rem;
+        width: 30rem;
+        color: $form_font_color;
+        font-size: 1.5rem;
+      }
+      fieldset {
+        border: 1px solid $primary;
+        border-radius: 0.5rem;
+      }
+      .MuiFormHelperText-root {
+        font-size: 1rem;
+      }
+    }
+  }
+}

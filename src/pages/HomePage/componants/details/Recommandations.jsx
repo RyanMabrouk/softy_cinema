@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { SwiperSlide } from "swiper/react";
-import Swiper from "../CustomSwiper";
+import Swiper from "../../../CustomSwiper";
 
 import no_poster from "../../assets/no-poster.png";
-import SearchContext from "../../Context/SearchContext";
-import useData from "../../hooks/useData";
+import SearchContext from "../../../../Context/SearchContext";
+import useData from "../../../../hooks/useData";
 
 export default function Recommandations() {
   const { cardClicked, setCardClicked } = useContext(SearchContext);

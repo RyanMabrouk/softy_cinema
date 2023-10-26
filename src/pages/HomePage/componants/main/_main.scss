@@ -38,7 +38,7 @@ main {
 .swiper-button-next,
 .swiper-button-prev,
 .swiper-button-disabled {
-  color: $primary;
+  color: $primary !important  ;
 
   padding: 0.15rem;
   svg {

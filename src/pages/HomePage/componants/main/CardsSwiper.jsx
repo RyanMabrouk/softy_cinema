@@ -1,9 +1,9 @@
 import React, { useContext, memo } from "react";
 import { SwiperSlide } from "swiper/react";
 
-import Card from "./Card/Card";
-import Swiper from "../CustomSwiper";
-import SearchContext from "../../Context/SearchContext";
+import Card from "../Card/Card.jsx";
+import Swiper from "../../../CustomSwiper.jsx";
+import SearchContext from "../../../../Context/SearchContext";
 import { SearchMessage } from "./SearchMessage";
 
 export default memo(function CardSwiper(props) {

@@ -4,13 +4,16 @@
 $myFont: "Poppins";
 
 // main colors
+$black: #1e1f28;
 $primary: #8323ff;
 $primary_linear: linear-gradient(91deg, #8323ff 0.99%, #ff2daf 102.1%);
-$black: #1e1f28;
+$secondary_linear:linear-gradient(91deg, #8323ff 0.99%, $black 102.1%);
 $search_text: white;
 $details_text: #BCBCBC;
 $grey: #8b8d9b;
 $yellow: #feea35;
+$form_font_color:rgba(255, 255, 255, 1);
+$form-grey:#4D4D4D;
 
 // Font weights
 $details_text_weight: 300;
@@ -18,3 +21,4 @@ $details_text_weight: 300;
 
 //Border Radius
 $base_radius: 1rem;
+$form_radius: 2rem;

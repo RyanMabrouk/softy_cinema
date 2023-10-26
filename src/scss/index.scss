@@ -27,18 +27,27 @@ ul {
 
 a {
   text-decoration: none;
+  cursor: pointer;
 }
 
 hr {
   border: 0;
-  border-top: 1px dotted #efefef;
 }
 input[type="button"],
 input[type="radio"] {
   display: none;
 }
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 100px $black inset !important;
+  color: #fff !important;
+}
 .container {
   width: 100vw;
+  min-height: 100vh;
   max-width: 95%;
   margin: 0 auto;
   box-sizing: border-box;
@@ -46,10 +55,11 @@ input[type="radio"] {
 /*----------------------------------------*/
 //Note responsive range (280px-2705px)
 // main scss
-@import "../componants/main/main.scss";
-@import "../componants/main/Card/card.scss";
-@import "../componants/nav/nav.scss";
-@import "../componants//details/details";
+@import "../pages/HomePage/componants/Card/Card";
+@import "../pages/HomePage/componants/main/main";
+@import "../pages/HomePage/componants/details/details";
+@import "../pages/HomePage/componants/nav/nav";
+@import "../pages/LoginPage/LoginPage";
 /*----------------------------------------*/
 //Loader
 div:has(.home_loader) {

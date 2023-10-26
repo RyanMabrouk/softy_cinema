@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import Loader from "../Loader";
-import SearchContext from "../../Context/SearchContext";
+import Loader from "../../../Loader";
+import SearchContext from "../../../../Context/SearchContext";
 
 export function SearchMessage() {
   const { query, loading } = useContext(SearchContext);

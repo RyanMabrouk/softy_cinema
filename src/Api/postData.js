@@ -1,4 +1,4 @@
-export default async function postData(data, url) {
+export default async function postData(data, url, sessionId = "") {
   const options = {
     method: "POST",
     headers: {
@@ -10,7 +10,12 @@ export default async function postData(data, url) {
     body: JSON.stringify(data),
   };
   try {
-    const res = await fetch(`https://api.themoviedb.org/3${url}`, options);
+    const res = await fetch(
+      `https://api.themoviedb.org/3${
+        url + (sessionId && "?session_id=" + sessionId)
+      }`,
+      options
+    );
     const response = await res.json();
     return response;
   } catch (err) {

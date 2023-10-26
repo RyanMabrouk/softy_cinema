@@ -1,24 +1,28 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useContext } from "react";
-import SearchContext from "../../Context/SearchContext.jsx";
-
-import CardSwiper from "./CardsSwiper";
 import Details from "../details";
+import SearchContext from "../../../../Context/SearchContext.jsx";
+import CardsSwiper from "./CardsSwiper"
 
 export default function Main() {
   const { searchData, favoriteData, ratedData, cardClicked } =
     useContext(SearchContext);
   return (
     <main>
-      <CardSwiper
+      <CardsSwiper
         key={1}
         name={"Movies"}
         data={searchData}
         sort={"popularity"}
         type={"search"}
       />
-      <CardSwiper key={2} name={"Favorite"} data={favoriteData} type={"list"} />
-      <CardSwiper
+      <CardsSwiper
+        key={2}
+        name={"Favorite"}
+        data={favoriteData}
+        type={"list"}
+      />
+      <CardsSwiper
         key={3}
         name={"Rated Movies"}
         data={ratedData}

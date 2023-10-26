@@ -1,13 +1,15 @@
 import React, { useContext } from "react";
 import { Tooltip } from "antd";
-import deleteData from "../../../Api/deleteData";
-import SearchContext from "../../../Context/SearchContext";
+import SearchContext from "../../../../Context/SearchContext";
+import UserContext from "../../../../Context/UserContext";
+import deleteData from "../../../../Api/deleteData"
 
 export function Rating(props) {
   const { refreshRated } = useContext(SearchContext);
+  const { sessionId } = useContext(UserContext);
   async function deleteRating() {
     props.setLoading(true);
-    const res = await deleteData(`/movie/${props.id}/rating`);
+    const res = await deleteData(`/movie/${props.id}/rating$`, sessionId);
     if (res.success) {
       refreshRated((old) => !old);
       props.setLoading(false);
