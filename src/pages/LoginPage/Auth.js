@@ -59,7 +59,7 @@ export async function authToken() {
   try {
     const REQUEST_TOKEN = await generateToken();
     if (REQUEST_TOKEN) {
-      location.href = `https://www.themoviedb.org/authenticate/${REQUEST_TOKEN}?redirect_to=http://localhost:5173`;
+      location.href = `https://www.themoviedb.org/authenticate/${REQUEST_TOKEN}?redirect_to=https://softy-cinema.web.app`;
     }
   } catch (err) {
     console.error(err);
