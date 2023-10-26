@@ -37,7 +37,7 @@ const loginValidationSchema = () => {
 };
 
 export default function LogIn() {
-  const { signup, setSessionId } = useContext(UserContext);
+  const { signup, setSessionId, setPopup } = useContext(UserContext);
   const [validation] = useSearchParams();
   useEffect(() => {
     if (validation.get("approved")) {
@@ -46,6 +46,7 @@ export default function LogIn() {
           validation.get("request_token")
         );
         if (session_id) {
+          setPopup("Welcome to SoftyCinema .!");
           setSessionId(session_id);
         }
       };
@@ -66,6 +67,7 @@ export default function LogIn() {
       if (res.success) {
         //setSessionId(res.guest_session_id);
         //to do -> use guest id
+        setPopup("Welcome Guest .!");
         setSessionId("");
       }
     } catch (err) {
@@ -76,9 +78,9 @@ export default function LogIn() {
   //------------Form management------------------
   const handleSubmitForm = async (loginFormikForm) => {
     const { user, password } = loginFormikForm.values;
-    console.log("click");
     const res = await logIn(user, password);
     if (res) {
+      setPopup(`Welcome Back ${user} .!`);
       setSessionId(res);
     }
   };

@@ -67,13 +67,8 @@ export async function generateSession(TOKEN) {
     const TOKEN_PAYLOAD = {
       request_token: TOKEN,
     };
-    console.log(
-      "🚀 ~ file: Auth.js:73 ~ generateSession ~ TOKEN_PAYLOAD:",
-      TOKEN_PAYLOAD
-    );
     const res = await postData(TOKEN_PAYLOAD, `/authentication/session/new`);
     if (res.success) {
-      console.log("User Athunticated successfully");
       return res.session_id;
     }
   } catch (err) {
