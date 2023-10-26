@@ -9,7 +9,7 @@ export function Rating(props) {
   const { sessionId } = useContext(UserContext);
   async function deleteRating() {
     props.setLoading(true);
-    const res = await deleteData(`/movie/${props.id}/rating$`, sessionId);
+    const res = await deleteData(`/movie/${props.id}/rating`, sessionId);
     if (res.success) {
       refreshRated((old) => !old);
       props.setLoading(false);
