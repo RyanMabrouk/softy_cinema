@@ -10,10 +10,6 @@ export async function logIn(user, password) {
         password: password,
         request_token: res.request_token,
       };
-      console.log(
-        "🚀 ~ file: index.tsx:57 ~ handleSubmitForm ~ PAYLOAD:",
-        PAYLOAD
-      );
       const validation = await postData(
         PAYLOAD,
         `/authentication/token/validate_with_login`
