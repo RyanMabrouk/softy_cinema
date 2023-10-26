@@ -20,7 +20,6 @@ export default function Details(props) {
     `/movie/${String(cardClicked)}?language=en-US`,
     cardClicked
   );
-  console.log("🚀 ~ file: index.jsx:22 ~ Details ~ cardClicked:", cardClicked);
   //--------------------DATA------------------------
   useEffect(() => {
     setPoster(
