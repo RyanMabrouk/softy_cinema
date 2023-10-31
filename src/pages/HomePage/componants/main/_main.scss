@@ -6,71 +6,97 @@ main {
   }
   header {
     @include flex(row, 1rem);
-    align-items: flex-start;
+    //align-items: flex-start;
     margin-top: 3rem;
   }
   div:has(.add_list) {
     @include flex(row);
-    align-items: flex-start;
-    margin-top: 3rem;
-  }
-  .add_list {
-    justify-self: center;
-    border-color: transparent;
-    padding: 1rem;
-    font-size: 2rem;
-    border-radius: 0.7rem;
-    width: 10rem;
-    height: 1rem;
-    @include gradiant_color();
-    outline: 0;
-    -webkit-text-fill-color: transparent;
-    font-weight: 700;
-    &::placeholder {
-      opacity: 0.4;
-      color: $grey;
-      @include gradiant_color();
-    }
-    &:focus {
-      border-color: transparent !important;
+    align-items: center;
+    label {
+      @include flex();
+      box-shadow: 0.2rem 0.2rem rgba(0, 0, 0, 0.24),
+        -0.2rem 0.2rem rgba(0, 0, 0, 0.24);
+      border-radius: 2rem;
+      width: 5rem;
+      height: 3rem;
+      justify-content: center;
+      cursor: pointer;
+      h1{
+        font-size: 1.5rem;
+      }
     }
   }
   .no_results {
     width: fit-content;
     margin: 3rem auto;
   }
-  .delete_list {
-    align-self: center;
-    img {
-      height: 1.5rem;
-      width: 1.5rem;
-      margin-bottom: -0.5rem;
-      filter: grayscale(1);
-      &:hover {
-        scale: 110%;
-        cursor: pointer;
-      }
-    }
-  }
-  .toggle {
-    font-size: 2rem;
-    color: white;
-    box-shadow: 0.2rem 0.2rem rgba(0, 0, 0, 0.24),
-      -0.2rem 0.2rem rgba(0, 0, 0, 0.24);
-    border-radius: 50%;
-    width: 3rem;
-    height: 3rem;
-    text-align: center;
-    cursor: pointer;
-    &:hover {
-      scale: 110%;
-    }
-  }
   section {
     @include flex(row, 1.5rem);
     .cards_container {
       width: 100%;
       justify-items: center;
+    }
+  }
+  .user_lists {
+    @include flex(row, 3rem);
+    flex-wrap: wrap;
+    margin-top: 3rem;
+    row-gap: 2rem;
+    h1{
+      font-size: 2rem;
+    }
+    header {
+      margin-top: 0;
+    }
+    .cards_container {
+      width: 100vw;
+    }
+    .add_list {
+      justify-self: center;
+      border-color: transparent;
+      padding: 1rem;
+      font-size: 2rem;
+      border-radius: 0.7rem;
+      width: 10rem;
+      height: 1rem;
+      @include gradiant_color();
+      outline: 0;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+      &::placeholder {
+        opacity: 0.5;
+        color: $grey;
+        @include gradiant_color();
+      }
+      &:focus {
+        border-color: transparent !important;
+      }
+    }
+    .delete_list {
+      align-self: center;
+      img {
+        height: 1.5rem;
+        width: 1.5rem;
+        margin-bottom: -0.5rem;
+        filter: grayscale(1);
+        &:hover {
+          scale: 110%;
+          cursor: pointer;
+        }
+      }
+    }
+    .toggle {
+      font-size: 2rem;
+      box-shadow: 0.2rem 0.2rem rgba(0, 0, 0, 0.24),
+        -0.2rem 0.2rem rgba(0, 0, 0, 0.24);
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+      text-align: center;
+      cursor: pointer;
+      &:hover {
+        scale: 110%;
+      }
     }
   }
 }

@@ -1,14 +1,11 @@
-import React, { useContext, useRef } from "react";
+import React from "react";
 import Details from "../details";
 import CardsSwiper from "./CardsSwiper";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Loader from "../../../UI/Loader";
-import UserContext from "../../../../Context/UserContext";
-import { createList } from "../../../../Store/dataThunks";
+import { AddListInput } from "./AddListInput";
 
 export default function Main() {
-  const dispatch = useDispatch();
-  const { sessionId } = useContext(UserContext);
   const searchData = useSelector((state) => state.data.searchData.data);
   const favoriteData = useSelector((state) => state.data.favoriteData);
   const ratedData = useSelector((state) => state.data.ratedData);
@@ -16,15 +13,19 @@ export default function Main() {
   const { id: cardClicked, loading } = useSelector(
     (state) => state.data.cardClicked
   );
-  const newlist = useRef(null);
-  function addNewList() {
-    if (newlist.current.value) {
-      dispatch(
-        createList({ name: newlist.current.value, sessionId: sessionId })
-      );
-      newlist.current.value = "";
-    }
-  }
+  const lists_swipers = listsData?.map((e, i) => {
+    return (
+      <CardsSwiper
+        key={i + 3}
+        ListId={e.id}
+        name={e.name}
+        data={e.data.items}
+        sort={false}
+        type={"list"}
+        allowDelete={true}
+      />
+    );
+  });
   return (
     <main>
       <CardsSwiper
@@ -48,31 +49,10 @@ export default function Main() {
         sort={"rating"}
         type={"list"}
       />
-      {listsData?.map((e, i) => {
-        return (
-          <CardsSwiper
-            key={i + 3}
-            ListId={e.id}
-            name={e.name}
-            data={e.data.items}
-            sort={false}
-            type={"list"}
-            allowDelete={true}
-          />
-        );
-      })}
-      <div>
-        <label htmlFor="addlist">
-          <h1 className="toggle">+</h1>
-        </label>
-        <input type="button" id="addlist" onClick={addNewList} />
-        <input
-          type="text"
-          className="add_list"
-          placeholder="Add a list"
-          ref={newlist}
-        />
-      </div>
+      <section className="user_lists">
+        {lists_swipers}
+        <AddListInput />
+      </section>
 
       {loading ? (
         <Loader className="details_loader" />

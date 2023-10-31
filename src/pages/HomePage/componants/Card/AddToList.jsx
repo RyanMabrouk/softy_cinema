@@ -13,7 +13,7 @@ export function AddToList(props) {
   const lists = useSelector((state) => state.data.listsData).map((e) => {
     return { id: e.id, name: e.name };
   });
-  const ITEM_HEIGHT = 48;
+  const ITEM_HEIGHT = 56;
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {

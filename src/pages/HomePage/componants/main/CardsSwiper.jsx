@@ -24,7 +24,6 @@ export default memo(function CardSwiper(props) {
     return (
       <SwiperSlide key={e.id + "/" + props.ListId}>
         <Card
-          //ELEMENT
           id={e.id}
           title={e.title}
           poster={
