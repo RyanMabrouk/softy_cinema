@@ -1,11 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Rating } from "./Rating";
 import no_poster from "../../assets/no-poster.png";
 import delete_icon from "../../assets/delete.svg";
-import SearchContext from "../../../../Context/SearchContext";
+import { useDispatch } from "react-redux";
+import { newCardClicked } from "../../../../Store/dataSlice";
 
 export function Poster(props) {
-  const { setCardClicked } = useContext(SearchContext);
+  const dispatch = useDispatch();
   const [currentImage, setCurrentImage] = useState(no_poster);
   const [loading, setLoading] = useState(true);
   //blurEffect
@@ -41,7 +42,7 @@ export function Poster(props) {
         type="button"
         id={props.id + "poster"}
         onClick={() => {
-          setCardClicked(props.id);
+          dispatch(newCardClicked(props.id));
         }}
       />
     </div>

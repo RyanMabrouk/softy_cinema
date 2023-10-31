@@ -1,12 +1,30 @@
-import React, { useEffect, useMemo } from "react";
-import { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import Details from "../details";
-import SearchContext from "../../../../Context/SearchContext.jsx";
-import CardsSwiper from "./CardsSwiper"
+import CardsSwiper from "./CardsSwiper";
+import { useDispatch, useSelector } from "react-redux";
+import Loader from "../../../UI/Loader";
+import UserContext from "../../../../Context/UserContext";
+import { createList } from "../../../../Store/dataThunks";
 
 export default function Main() {
-  const { searchData, favoriteData, ratedData, cardClicked } =
-    useContext(SearchContext);
+  const dispatch = useDispatch();
+  const { sessionId } = useContext(UserContext);
+  const searchData = useSelector((state) => state.data.searchData.data);
+  const favoriteData = useSelector((state) => state.data.favoriteData);
+  const ratedData = useSelector((state) => state.data.ratedData);
+  const listsData = useSelector((state) => state.data.listsData);
+  const { id: cardClicked, loading } = useSelector(
+    (state) => state.data.cardClicked
+  );
+  const newlist = useRef(null);
+  function addNewList() {
+    if (newlist.current.value) {
+      dispatch(
+        createList({ name: newlist.current.value, sessionId: sessionId })
+      );
+      newlist.current.value = "";
+    }
+  }
   return (
     <main>
       <CardsSwiper
@@ -20,6 +38,7 @@ export default function Main() {
         key={2}
         name={"Favorite"}
         data={favoriteData}
+        sort={false}
         type={"list"}
       />
       <CardsSwiper
@@ -29,11 +48,38 @@ export default function Main() {
         sort={"rating"}
         type={"list"}
       />
-      {cardClicked && (
-        <Details
-          key={cardClicked + "details"}
-          className={"details_container details_container_visible"}
+      {listsData?.map((e, i) => {
+        return (
+          <CardsSwiper
+            key={i + 3}
+            ListId={e.id}
+            name={e.name}
+            data={e.data.items}
+            sort={false}
+            type={"list"}
+            allowDelete={true}
+          />
+        );
+      })}
+      <div>
+        <label htmlFor="addlist">
+          <h1 className="toggle">+</h1>
+        </label>
+        <input type="button" id="addlist" onClick={addNewList} />
+        <input
+          type="text"
+          className="add_list"
+          placeholder="Add a list"
+          ref={newlist}
         />
+      </div>
+
+      {loading ? (
+        <Loader className="details_loader" />
+      ) : (
+        cardClicked && (
+          <Details key={cardClicked} className="details_container" />
+        )
       )}
     </main>
   );

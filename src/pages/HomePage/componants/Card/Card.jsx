@@ -1,40 +1,58 @@
-import React, { useContext, useState } from "react";
-import Loader from "../../../Loader";
+import React, { useContext, useEffect, useState } from "react";
+import Loader from "../../../UI/Loader";
 import { Tooltip } from "antd";
 
-import time from "../../assets/time.svg";
+import group from "../../assets/group.png";
 import date from "../../assets/date.svg";
 import star from "../../assets/star.svg";
-import { Button } from "./Button";
+import { Button as CardButton } from "./Button";
 import { Poster } from "./Poster";
 import UserContext from "../../../../Context/UserContext";
-import SearchContext from "../../../../Context/SearchContext";
-import postData from "../../../../Api/postData";
+import postData from "../../../../Services/postData";
+import { useDispatch } from "react-redux";
+import { upadateFavourite, updateList } from "../../../../Store/dataSlice";
+import { AddToList } from "./AddToList";
 
 export default function Card(props) {
   const { sessionId } = useContext(UserContext);
-  const { refreshSearch, refreshFavorite } = useContext(SearchContext);
+  const dispatch = useDispatch();
   const [watched, setWatched] = useState(props.watched);
   const [loading, setLoading] = useState(false);
   if (watched !== props.watched) {
     setWatched(props.watched);
   }
-  async function toggleWatched(action) {
+  async function deleteFromList() {
+    await dispatch(
+      updateList({
+        listId: props.listId,
+        movieId: props.id,
+        action: "delete",
+        sessionId: sessionId,
+      })
+    );
+  }
+  async function toggleFavorite(action) {
+    const res = await postData(
+      {
+        media_type: "movie",
+        media_id: props.id,
+        favorite: action,
+      },
+      `/account/20285930/favorite`,
+      sessionId
+    );
+    if (res.success) {
+      setWatched(action);
+      await dispatch(upadateFavourite(sessionId));
+    }
+  }
+  async function toggle(action) {
     setLoading(true);
     try {
-      const res = await postData(
-        {
-          media_type: "movie",
-          media_id: props.id,
-          favorite: action,
-        },
-        `/account/20285930/favorite`,
-        sessionId
-      );
-      if (res.success) {
-        setWatched(action);
-        refreshSearch((old) => !old);
-        refreshFavorite((old) => !old);
+      if (props.listId) {
+        await deleteFromList();
+      } else {
+        await toggleFavorite(action);
       }
     } catch (err) {
       console.error(err);
@@ -59,22 +77,25 @@ export default function Card(props) {
               <img src={star} alt="" />
               {props.rating}
             </div>
+            <div>
+              <AddToList {...props} />
+            </div>
           </div>
           <Poster {...props} setLoading={setLoading} />
-          <div className="time_date_container">
-            <div className="time">
-              <img src={time} alt="" />
-              {props.time}
+          <div className="popularity_date_container">
+            <div className="popularity">
+              <img src={group} alt="" />
+              {props.popularity}
             </div>
             <div className="date">
               <img src={date} alt="" />
               {props.date}
             </div>
           </div>
-          <Button
+          <CardButton
             {...props}
             watched={watched}
-            toggleWatched={toggleWatched}
+            toggle={toggle}
             list={props.type === "list"}
           />
         </>

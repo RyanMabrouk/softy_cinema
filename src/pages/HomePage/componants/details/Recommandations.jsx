@@ -1,16 +1,17 @@
 import React, { useContext } from "react";
 import { SwiperSlide } from "swiper/react";
-import Swiper from "../../../CustomSwiper";
+import Swiper from "../../../UI/CustomSwiper";
 
 import no_poster from "../../assets/no-poster.png";
-import SearchContext from "../../../../Context/SearchContext";
-import useData from "../../../../hooks/useData";
+import { useDispatch, useSelector } from "react-redux";
+import { newCardClicked } from "../../../../Store/dataSlice";
 
 export default function Recommandations() {
-  const { cardClicked, setCardClicked } = useContext(SearchContext);
-  const [recommendationsData] = useData(
-    `/movie/${String(cardClicked)}/recommendations?language=en-US&page=1`
+  //const { recommendationsData, setCardClicked } = useContext(SearchContext);
+  const recommendationsData = useSelector(
+    (state) => state.data.cardClicked.recommendationsData
   );
+  const dispatch = useDispatch();
   const recommendationsSlides = recommendationsData?.map((e) => {
     return (
       <SwiperSlide key={e.id + "rec"}>
@@ -29,7 +30,7 @@ export default function Recommandations() {
           type="button"
           id={e.id + "recommanded"}
           onClick={() => {
-            setCardClicked(e.id);
+            dispatch(newCardClicked(e.id));
           }}
         />
       </SwiperSlide>

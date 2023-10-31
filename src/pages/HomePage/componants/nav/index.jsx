@@ -1,18 +1,25 @@
-import React, { useRef } from "react";
-import { useContext } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { clearSession, newQuery } from "../../../../Store/dataSlice";
 
 import logo from "../../assets/logo.svg";
 import thunder from "../../assets/thunder.svg";
-import SearchContext from "../../../../Context/SearchContext";
 import { logOut } from "../../../LoginPage/Auth";
 import { useNavigate } from "react-router-dom";
+
 export default function Nav() {
   const navigate = useNavigate();
-  const { loading, searchData, setQuery } = useContext(SearchContext);
+  const dispatch = useDispatch();
+  const { searchData, loading } = useSelector((state) => state.data.searchData);
+  const [query, setQuery] = useState("");
   const searchInput = useRef(null);
   function handleChange(e) {
     setQuery(e.target.value);
   }
+  useEffect(() => {
+    const promise = dispatch(newQuery(query));
+    return () => promise.abort();
+  }, [query]);
   return (
     <nav>
       <img className="logo" src={logo} alt="" />
@@ -44,6 +51,7 @@ export default function Nav() {
           className="logout"
           onClick={() => {
             logOut();
+            dispatch(clearSession());
             navigate("/");
           }}
         >

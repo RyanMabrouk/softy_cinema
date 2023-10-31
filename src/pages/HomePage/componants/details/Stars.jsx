@@ -1,12 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import StarRatings from "react-star-ratings";
-import SearchContext from "../../../../Context/SearchContext";
 import UserContext from "../../../../Context/UserContext";
-import postData from "../../../../Api/postData";
-
+import postData from "../../../../Services/postData";
+import { useDispatch, useSelector } from "react-redux";
+import { updateRated } from "../../../../Store/dataSlice";
 
 export function Stars() {
-  const { cardClicked, ratedData, refreshRated } = useContext(SearchContext);
+  //const { cardClicked, ratedData, refreshRated } = useContext(SearchContext);
+  const cardClicked = useSelector((state) => state.data.cardClicked.id);
+  const ratedData = useSelector((state) => state.data.ratedData);
+  const dispatch = useDispatch();
+
   const { sessionId } = useContext(UserContext);
   const [userRating, setUserRating] = useState(null);
   useEffect(() => {
@@ -21,8 +25,7 @@ export function Stars() {
             sessionId
           );
           if (res.success) {
-            console.log("success");
-            refreshRated((old) => !old);
+            setTimeout(() => dispatch(updateRated(sessionId)), 1000);
           }
         } catch (err) {
           console.error(err);
@@ -31,6 +34,7 @@ export function Stars() {
     }
     upadteRating();
   }, [userRating]);
+
   return (
     <div card="user_rating">
       <StarRatings

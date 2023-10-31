@@ -21,7 +21,7 @@ body {
   background-color: $black;
 }
 ul {
-  padding: 0;
+  padding: 0px;
   list-style-type: none;
 }
 
@@ -42,8 +42,8 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 100px $black inset !important;
-  color: #fff !important;
+  -webkit-box-shadow: 0 0 0 10px $black inset !important;
+  color: $black !important;
 }
 .container {
   width: 100vw;

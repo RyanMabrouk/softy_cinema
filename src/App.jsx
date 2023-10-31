@@ -1,31 +1,41 @@
-import React, { Suspense, lazy } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Context } from "./Context/SearchContext.jsx";
-import Loader from "./pages/Loader.jsx";
+import React, { lazy, Suspense } from "react";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import { LoginContext } from "./Context/UserContext.jsx";
+import store from "./Store/store.js";
+import { Provider } from "react-redux";
+import { ProtectedRoute } from "./pages/UI/ProtectedRoute.jsx";
+import Loader from "./pages/UI/Loader.jsx";
 const Login = lazy(() => import("./pages/LoginPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 
-function App() {
+const router = createBrowserRouter([
+  {
+    element: (
+      <Suspense fallback={<Loader className="home_loader" />}>
+        <Outlet />
+      </Suspense>
+    ),
+    children: [
+      { path: "/", element: <Login /> },
+      {
+        path: "/Home",
+        element: (
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        ),
+      },
+    ],
+  },
+]);
+export default function App() {
   return (
     <div className="container">
-      <BrowserRouter>
+      <Provider store={store}>
         <LoginContext>
-          <Context>
-            <Suspense fallback={<Loader className="home_loader" />}>
-              <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/Home" element={<HomePage />} />
-              </Routes>
-            </Suspense>
-          </Context>
+          <RouterProvider router={router} />
         </LoginContext>
-      </BrowserRouter>
+      </Provider>
     </div>
   );
-}
-export default App;
-
-function Test() {
-  return <div>Test</div>;
 }
