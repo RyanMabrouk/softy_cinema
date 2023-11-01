@@ -1,0 +1,75 @@
+.right_container {
+  div:has(.video_button) {
+    @include flex(row, 1.5rem);
+  }
+  .video_button svg {
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    width: 6rem;
+    margin-bottom: -1rem;
+  }
+  .triangle {
+    stroke-dasharray: 240;
+    stroke-dashoffset: 480;
+    stroke: white;
+    transform: translateY(0);
+    transition: all 0.7s ease-in-out;
+  }
+  .circle {
+    stroke: white;
+    stroke-dasharray: 650;
+    stroke-dashoffset: 1300;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .video svg:hover .triangle,
+  .video_button:hover .triangle {
+    stroke-dashoffset: 0;
+    opacity: 1;
+    stroke: #ff001f;
+    animation: trailorPlay 0.7s ease-in-out;
+  }
+  .video svg:hover .circle,
+  .video_button:hover .circle {
+    stroke-dashoffset: 0;
+    stroke: #ff001f;
+  }
+  .videoPopUpBtn {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+  }
+  .videoMask {
+    position: absolute;
+    backdrop-filter: brightness(0.2) blur(10px);
+    width: 150vw;
+    height: 150vh;
+    cursor: pointer;
+  }
+  .player {
+    z-index: 20;
+    iframe {
+      position: absolute;
+      right: 35%;
+      top: 15%;
+      width: 50rem;
+      height: 30rem;
+    }
+  }
+
+  @keyframes trailorPlay {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}

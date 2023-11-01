@@ -13,7 +13,7 @@
     width: 100%;
   }
   .poster,
-  .time_date_container,
+  .popularity_date_container,
   .title_rating_container,
   .watched_btn {
     grid-column: 1 / span 2;
@@ -26,7 +26,6 @@
       cursor: pointer;
       scale: 105%;
       img {
-        //background-color: white;
         border-radius: 50%;
       }
     }
@@ -37,7 +36,6 @@
       cursor: pointer;
     }
   }
-
   .poster {
     position: relative;
     height: 20rem;
@@ -70,7 +68,7 @@
     }
   }
   .title_rating_container {
-    @include flex(row, 1rem);
+    @include flex(row, 0.5rem);
     justify-content: space-between;
     grid-row: 1;
     height: max-content;
@@ -91,16 +89,27 @@
       height: 3.5rem;
       margin-right: -1rem;
     }
+    button {
+      padding: 0;
+      margin: 0;
+      min-width: 0;
+      @include gradiant_color();
+    }
   }
-  .time_date_container {
+  .popularity_date_container {
     @include flex(row);
     justify-content: space-between;
     grid-row: 3;
     color: $grey;
     font-size: 0.7rem;
-    .time,
+    .popularity,
     .date {
       @include flex(row, 0.5rem);
+    }
+    .popularity {
+      img {
+        height: 1.2rem;
+      }
     }
   }
 }

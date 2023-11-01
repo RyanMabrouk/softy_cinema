@@ -2,18 +2,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;500;600;700;800;900&display=swap");
 // Fonts
 $myFont: "Poppins";
-
+//light mode
+//black e1e0d7
+//primary 7cdc00
+//secondary 00d250
 // main colors
 $black: #1e1f28;
 $primary: #8323ff;
 $primary_linear: linear-gradient(91deg, #8323ff 0.99%, #ff2daf 102.1%);
-$secondary_linear:linear-gradient(91deg, #8323ff 0.99%, $black 102.1%);
+$secondary_linear: linear-gradient(91deg, #8323ff 0.99%, $black 102.1%);
 $search_text: white;
-$details_text: #BCBCBC;
+$details_text: #bcbcbc;
 $grey: #8b8d9b;
 $yellow: #feea35;
-$form_font_color:rgba(255, 255, 255, 1);
-$form-grey:#4D4D4D;
+$form_font_color: rgba(255, 255, 255, 1);
+$form-grey: #4d4d4d;
+$form_box_shasow: -8px 4px 5px 0px rgba(0, 0, 0, 0.24);
 
 // Font weights
 $details_text_weight: 300;

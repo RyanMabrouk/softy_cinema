@@ -1,26 +1,25 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import time from "../../assets/time.svg";
 import grey_star from "../../assets/grey_star.svg";
 import no_poster from "../../assets/no-poster.png";
 import close from "../../assets/close.svg";
+//import Loader from "../../../UI/Loader";
 
 import Recommandations from "./Recommandations";
 import { Stars } from "./Stars";
-import SearchContext from "../../../../Context/SearchContext";
-import useData from "../../../../hooks/useData";
+import { useDispatch, useSelector } from "react-redux";
+import { newCardClicked } from "../../../../Store/dataSlice";
+import { PlayIcon } from "../../assets/PlayIcon";
+import getData from "../../../../Services/getData";
+import VideoPopUp from "./VideoPopUp";
 
 export default function Details(props) {
-  const { setCardClicked, cardClicked } = useContext(SearchContext);
+  const { movieData } = useSelector((state) => state.data.cardClicked);
+  const dispatch = useDispatch();
   //-------------------------------------
   const [poster, setPoster] = useState(null);
   const [backgroundImage, setBackgroundImage] = useState(null);
-  //-------------------------------------
-  const [movieData] = useData(
-    `/movie/${String(cardClicked)}?language=en-US`,
-    cardClicked
-  );
-  //--------------------DATA------------------------
   useEffect(() => {
     setPoster(
       movieData?.poster_path
@@ -36,8 +35,9 @@ export default function Details(props) {
         ")"
     );
   }, [movieData]);
+
   return (
-    <div className={props.className ? props.className : "details_container"}>
+    <div className={props.className}>
       <img className="poster" src={poster} alt="" />
       <div
         style={{
@@ -46,7 +46,10 @@ export default function Details(props) {
       >
         <div className="right_container">
           <div className="title">
-            {movieData?.original_title}
+            <div>
+              {movieData?.original_title}
+              <Trailer />
+            </div>
             <Stars />
           </div>
           <div className="runtime">
@@ -88,12 +91,41 @@ export default function Details(props) {
             <input
               type="button"
               id="close"
-              onClick={() => setCardClicked(null)}
+              onClick={() => dispatch(newCardClicked(""))}
             />
           </div>
           <Recommandations />
         </div>
       </div>
+    </div>
+  );
+}
+
+function Trailer() {
+  const { id } = useSelector((state) => state.data.cardClicked);
+  const [isVisible, setIsVisible] = useState(false);
+  const [video, setVideo] = useState();
+  useEffect(() => {
+    async function setData() {
+      let videosData = await getData(`/movie/${id}/videos?language=en-US`);
+      videosData = await videosData?.filter((e) => e.type.includes("Trailer"));
+      setVideo(videosData[0]?.key ?? "");
+    }
+    setData();
+  }, [id]);
+  async function togglePopUP() {
+    console.log("clicked");
+    setIsVisible((old) => !old);
+  }
+  return (
+    <div className="video_button">
+      {video && (
+        <label htmlFor={"trailer" + id}>
+          <PlayIcon />
+        </label>
+      )}
+      <input type="button" id={"trailer" + id} onClick={togglePopUP} />
+      {isVisible && <VideoPopUp handleToggle={togglePopUP} videoId={video} />}
     </div>
   );
 }

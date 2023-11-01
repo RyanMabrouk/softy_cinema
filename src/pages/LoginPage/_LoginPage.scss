@@ -52,7 +52,7 @@
     border-radius: $form_radius;
     width: fit-content;
     backdrop-filter: blur(26.5px);
-    box-shadow: -8px 4px 5px 0px rgba(0, 0, 0, 0.24);
+    box-shadow: $form_box_shasow;
     padding: 0 3rem;
     padding-top: 6rem;
     padding-bottom: 2rem;

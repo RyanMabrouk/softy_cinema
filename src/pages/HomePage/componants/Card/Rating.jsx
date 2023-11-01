@@ -1,20 +1,24 @@
 import React, { useContext } from "react";
 import { Tooltip } from "antd";
-import SearchContext from "../../../../Context/SearchContext";
 import UserContext from "../../../../Context/UserContext";
-import deleteData from "../../../../Api/deleteData"
+import deleteData from "../../../../Services/deleteData";
+import { useDispatch } from "react-redux";
+import { updateRated } from "../../../../Store/dataSlice";
 
 export function Rating(props) {
-  const { refreshRated } = useContext(SearchContext);
+  const dispatch = useDispatch();
   const { sessionId } = useContext(UserContext);
   async function deleteRating() {
     props.setLoading(true);
-    const res = await deleteData(`/movie/${props.id}/rating`, sessionId);
-    if (res.success) {
-      refreshRated((old) => !old);
+    try {
+      const res = await deleteData(`/movie/${props.id}/rating`, sessionId);
+      if (res.success) {
+        setTimeout(() => dispatch(updateRated(sessionId)), 1000);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
       props.setLoading(false);
-    } else {
-      console.error(res.error);
     }
   }
   return (

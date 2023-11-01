@@ -1,9 +1,10 @@
-import fetchData from "../../Api/fetchData";
-import postData from "../../Api/postData";
+import { LOCAL_LINK, WEB_LINK } from "../../Services/constants";
+import getData from "../../Services/getData";
+import postData from "../../Services/postData";
 
 export async function logIn(user, password) {
   try {
-    const res = await fetchData(`/authentication/token/new`);
+    const res = await getData(`/authentication/token/new`);
     if (res.success) {
       const PAYLOAD = {
         username: user,
@@ -32,12 +33,10 @@ export async function logIn(user, password) {
     console.error(err);
   }
 }
-export function logOut() {
-  localStorage.removeItem("sessionId");
-}
+
 export async function generateToken() {
   try {
-    const res = await fetchData(`/authentication/token/new`);
+    const res = await getData(`/authentication/token/new`);
     if (res.success) {
       return res.request_token;
     } else {
@@ -55,7 +54,8 @@ export async function authToken() {
   try {
     const REQUEST_TOKEN = await generateToken();
     if (REQUEST_TOKEN) {
-      location.href = `https://www.themoviedb.org/authenticate/${REQUEST_TOKEN}?redirect_to=https://softy-cinema.web.app`;
+      location.href = `https://www.themoviedb.org/authenticate/${REQUEST_TOKEN}?
+      redirect_to=${WEB_LINK}`;
     }
   } catch (err) {
     console.error(err);
@@ -74,4 +74,18 @@ export async function generateSession(TOKEN) {
   } catch (err) {
     console.error(err);
   }
+}
+export async function generateGuest() {
+  try {
+    const res = await getData(`/authentication/guest_session/new`);
+    if (res.success) {
+      return res.guest_session_id;
+    }
+  } catch (err) {
+    alert("Somthing went wrong please contact support!");
+    console.error(err);
+  }
+}
+export function logOut() {
+  localStorage.removeItem("sessionId");
 }

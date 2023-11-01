@@ -10,7 +10,7 @@
   grid-template-rows: $rows;
   gap: $gap;
 }
-@mixin button(){
+@mixin button() {
   @include flex(row, 0.25rem);
   background: $primary_linear;
   padding: 0.75rem;
@@ -21,4 +21,9 @@
   img {
     height: 2.2rem;
   }
+}
+@mixin gradiant_color() {
+  background: $primary_linear;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

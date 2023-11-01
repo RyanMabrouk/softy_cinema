@@ -1,12 +1,18 @@
-import React, { useEffect, useMemo } from "react";
-import { useContext } from "react";
+import React from "react";
 import Details from "../details";
-import SearchContext from "../../../../Context/SearchContext.jsx";
-import CardsSwiper from "./CardsSwiper"
+import CardsSwiper from "./CardsSwiper";
+import { useSelector } from "react-redux";
+import Loader from "../../../UI/Loader";
+import { AddListInput } from "./AddListInput";
 
 export default function Main() {
-  const { searchData, favoriteData, ratedData, cardClicked } =
-    useContext(SearchContext);
+  const searchData = useSelector((state) => state.data.searchData.data);
+  const favoriteData = useSelector((state) => state.data.favoriteData);
+  const ratedData = useSelector((state) => state.data.ratedData);
+  const listsData = useSelector((state) => state.data.listsData);
+  const { id: cardClicked, loading } = useSelector(
+    (state) => state.data.cardClicked
+  );
   return (
     <main>
       <CardsSwiper
@@ -20,7 +26,9 @@ export default function Main() {
         key={2}
         name={"Favorite"}
         data={favoriteData}
+        sort={false}
         type={"list"}
+        toggle={true}
       />
       <CardsSwiper
         key={3}
@@ -28,12 +36,30 @@ export default function Main() {
         data={ratedData}
         sort={"rating"}
         type={"list"}
+        toggle={true}
       />
-      {cardClicked && (
-        <Details
-          key={cardClicked + "details"}
-          className={"details_container details_container_visible"}
-        />
+      <section className="user_lists">
+        {listsData?.map((e, i) => {
+          return (
+            <CardsSwiper
+              key={e.id}
+              name={e.name}
+              data={e.data.items}
+              sort={false}
+              type={"list"}
+              ListId={e.id}
+              allowDelete={true}
+            />
+          );
+        })}
+        <AddListInput />
+      </section>
+      {loading ? (
+        <Loader className="details_loader" />
+      ) : (
+        cardClicked && (
+          <Details key={cardClicked} className="details_container" />
+        )
       )}
     </main>
   );
