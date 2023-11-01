@@ -4,12 +4,15 @@ import time from "../../assets/time.svg";
 import grey_star from "../../assets/grey_star.svg";
 import no_poster from "../../assets/no-poster.png";
 import close from "../../assets/close.svg";
-import Loader from "../../../UI/Loader";
+//import Loader from "../../../UI/Loader";
 
 import Recommandations from "./Recommandations";
 import { Stars } from "./Stars";
 import { useDispatch, useSelector } from "react-redux";
 import { newCardClicked } from "../../../../Store/dataSlice";
+import { PlayIcon } from "../../assets/PlayIcon";
+import getData from "../../../../Services/getData";
+import VideoPopUp from "./VideoPopUp";
 
 export default function Details(props) {
   const { movieData } = useSelector((state) => state.data.cardClicked);
@@ -32,6 +35,7 @@ export default function Details(props) {
         ")"
     );
   }, [movieData]);
+
   return (
     <div className={props.className}>
       <img className="poster" src={poster} alt="" />
@@ -42,7 +46,10 @@ export default function Details(props) {
       >
         <div className="right_container">
           <div className="title">
-            {movieData?.original_title}
+            <div>
+              {movieData?.original_title}
+              <Trailer />
+            </div>
             <Stars />
           </div>
           <div className="runtime">
@@ -90,6 +97,35 @@ export default function Details(props) {
           <Recommandations />
         </div>
       </div>
+    </div>
+  );
+}
+
+function Trailer() {
+  const { id } = useSelector((state) => state.data.cardClicked);
+  const [isVisible, setIsVisible] = useState(false);
+  const [video, setVideo] = useState();
+  useEffect(() => {
+    async function setData() {
+      let videosData = await getData(`/movie/${id}/videos?language=en-US`);
+      videosData = await videosData?.filter((e) => e.type.includes("Trailer"));
+      setVideo(videosData[0]?.key ?? "");
+    }
+    setData();
+  }, [id]);
+  async function togglePopUP() {
+    console.log("clicked");
+    setIsVisible((old) => !old);
+  }
+  return (
+    <div className="video_button">
+      {video && (
+        <label htmlFor={"trailer" + id}>
+          <PlayIcon />
+        </label>
+      )}
+      <input type="button" id={"trailer" + id} onClick={togglePopUP} />
+      {isVisible && <VideoPopUp handleToggle={togglePopUP} videoId={video} />}
     </div>
   );
 }

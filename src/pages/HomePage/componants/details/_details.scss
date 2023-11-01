@@ -1,10 +1,11 @@
+@import "./PlayIcon.scss";
 .details_container {
   position: fixed;
   @include grid(42% auto, auto);
   height: 70vh;
   width: 60vw;
-  left: 1%;
-  top: 7%;
+  left: 2%;
+  top: 10%;
   z-index: 2;
   transform: translateX(10vw);
   transition: all 5s;

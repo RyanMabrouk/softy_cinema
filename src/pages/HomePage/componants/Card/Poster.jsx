@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Rating } from "./Rating";
 import no_poster from "../../assets/no-poster.png";
-import delete_icon from "../../assets/delete.svg";
+//import delete_icon from "../../assets/delete.svg";
 import { useDispatch } from "react-redux";
 import { newCardClicked } from "../../../../Store/dataSlice";
 

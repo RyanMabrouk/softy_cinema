@@ -18,6 +18,5 @@ export default async function fetchData(path, sessionId = "") {
     return data.results ? data.results : data;
   } catch (err) {
     console.error(err);
-    return err;
-  }
+    }
 }

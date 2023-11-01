@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateRated } from "../../../../Store/dataSlice";
 
 export function Stars() {
-  //const { cardClicked, ratedData, refreshRated } = useContext(SearchContext);
   const cardClicked = useSelector((state) => state.data.cardClicked.id);
   const ratedData = useSelector((state) => state.data.ratedData);
   const dispatch = useDispatch();
@@ -41,7 +40,7 @@ export function Stars() {
         rating={
           userRating || ratedData?.find((e) => e.id === cardClicked)?.rating
         }
-        starRatedColor="yellow"
+        starRatedColor="violet"
         starHoverColor="yellow"
         changeRating={setUserRating}
         numberOfStars={10}

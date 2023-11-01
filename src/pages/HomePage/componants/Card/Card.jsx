@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Loader from "../../../UI/Loader";
 import { Tooltip } from "antd";
 

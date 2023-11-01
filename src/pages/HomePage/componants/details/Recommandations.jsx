@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { SwiperSlide } from "swiper/react";
 import Swiper from "../../../UI/CustomSwiper";
 
@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { newCardClicked } from "../../../../Store/dataSlice";
 
 export default function Recommandations() {
-  //const { recommendationsData, setCardClicked } = useContext(SearchContext);
   const recommendationsData = useSelector(
     (state) => state.data.cardClicked.recommendationsData
   );

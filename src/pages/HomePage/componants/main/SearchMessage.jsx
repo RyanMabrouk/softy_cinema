@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import Loader from "../../../UI/Loader";
 import { useSelector } from "react-redux";
 

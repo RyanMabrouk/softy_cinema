@@ -9,7 +9,9 @@ import { DeleteIcon } from "./DeleteIcon.jsx";
 
 export default memo(function CardSwiper(props) {
   const favoriteData = useSelector((state) => state.data.favoriteData);
-  const [toggle, setToggle] = useState(props.type !== "list");
+  const [toggle, setToggle] = useState(
+    props.toggle ? props.toggle : props.type !== "list"
+  );
   const data = props.data ? [...props.data] : [];
   if (props.sort) {
     data.sort((a, b) => {

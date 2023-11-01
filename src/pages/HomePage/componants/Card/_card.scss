@@ -26,7 +26,6 @@
       cursor: pointer;
       scale: 105%;
       img {
-        //background-color: white;
         border-radius: 50%;
       }
     }
@@ -37,13 +36,6 @@
       cursor: pointer;
     }
   }
-  /*.lists_menu {
-    label {
-      &:hover {
-        cursor: pointer;
-      }
-    }
-  }*/
   .poster {
     position: relative;
     height: 20rem;
@@ -98,7 +90,6 @@
       margin-right: -1rem;
     }
     button {
-      //@include flex(column);
       padding: 0;
       margin: 0;
       min-width: 0;

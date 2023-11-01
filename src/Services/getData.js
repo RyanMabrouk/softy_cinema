@@ -16,6 +16,5 @@ export default async function getData(path, signal) {
     return data.results ? data.results : data;
   } catch (err) {
     console.error(err);
-    return err;
   }
 }

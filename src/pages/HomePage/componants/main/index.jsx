@@ -13,19 +13,6 @@ export default function Main() {
   const { id: cardClicked, loading } = useSelector(
     (state) => state.data.cardClicked
   );
-  const lists_swipers = listsData?.map((e, i) => {
-    return (
-      <CardsSwiper
-        key={i + 3}
-        ListId={e.id}
-        name={e.name}
-        data={e.data.items}
-        sort={false}
-        type={"list"}
-        allowDelete={true}
-      />
-    );
-  });
   return (
     <main>
       <CardsSwiper
@@ -41,6 +28,7 @@ export default function Main() {
         data={favoriteData}
         sort={false}
         type={"list"}
+        toggle={true}
       />
       <CardsSwiper
         key={3}
@@ -48,12 +36,24 @@ export default function Main() {
         data={ratedData}
         sort={"rating"}
         type={"list"}
+        toggle={true}
       />
       <section className="user_lists">
-        {lists_swipers}
+        {listsData?.map((e, i) => {
+          return (
+            <CardsSwiper
+              key={e.id}
+              name={e.name}
+              data={e.data.items}
+              sort={false}
+              type={"list"}
+              ListId={e.id}
+              allowDelete={true}
+            />
+          );
+        })}
         <AddListInput />
       </section>
-
       {loading ? (
         <Loader className="details_loader" />
       ) : (

@@ -3,10 +3,10 @@ main {
   position: relative;
   h1 {
     @include gradiant_color();
+    font-weight: 600;
   }
   header {
     @include flex(row, 1rem);
-    //align-items: flex-start;
     margin-top: 3rem;
   }
   div:has(.add_list) {
@@ -21,7 +21,7 @@ main {
       height: 3rem;
       justify-content: center;
       cursor: pointer;
-      h1{
+      h1 {
         font-size: 1.5rem;
       }
     }
@@ -42,7 +42,7 @@ main {
     flex-wrap: wrap;
     margin-top: 3rem;
     row-gap: 2rem;
-    h1{
+    h1 {
       font-size: 2rem;
     }
     header {
