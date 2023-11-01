@@ -30,7 +30,17 @@ const dataSlice = createSlice({
   initialState: initialState,
   reducers: {
     clearSession(state) {
-      state = initialState;
+      state.query = "";
+      state.searchData = { data: null, loading: false };
+      state.favoriteData = null;
+      state.ratedData = null;
+      state.listsData = null;
+      state.cardClicked = {
+        id: "",
+        movieData: null,
+        recommendationsData: null,
+        loading: false,
+      };
     },
   },
   extraReducers: (builder) =>
