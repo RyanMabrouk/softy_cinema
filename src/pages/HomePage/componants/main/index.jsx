@@ -19,13 +19,15 @@ export default function Main() {
         key={1}
         name={"Movies"}
         data={searchData}
-        sort={"popularity"}
+        dataIndex={"searchData"}
+        sort={/*"popularity"*/ false}
         type={"search"}
       />
       <CardsSwiper
         key={2}
         name={"Favorite"}
         data={favoriteData}
+        dataIndex={"favoriteData"}
         sort={false}
         type={"list"}
         toggle={true}
@@ -34,6 +36,7 @@ export default function Main() {
         key={3}
         name={"Rated Movies"}
         data={ratedData}
+        dataIndex={"ratedData"}
         sort={"rating"}
         type={"list"}
         toggle={true}

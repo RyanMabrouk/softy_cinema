@@ -4,10 +4,7 @@ import api from "./axios.config";
 export default async function postData(payload, path, sessionId = "") {
   const options = {
     method: "POST",
-    url: path,
-    params: {
-      sessionId: sessionId,
-    },
+    url: `${path + (sessionId && "?session_id=" + sessionId)}`,
     data: payload,
   };
   return await api

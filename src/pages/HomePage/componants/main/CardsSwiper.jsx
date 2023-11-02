@@ -1,14 +1,22 @@
-import React, { memo, useState } from "react";
+import React, { memo, useContext, useEffect, useState } from "react";
 import { SwiperSlide } from "swiper/react";
 
 import Card from "../Card/Card.jsx";
 import Swiper from "../../../UI/CustomSwiper.jsx";
 import { SearchMessage } from "./SearchMessage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { DeleteIcon } from "./DeleteIcon.jsx";
+import { ToggleBtn } from "./ToggleBtn.jsx";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import UserContext from "../../../../Context/UserContext.jsx";
+import { AddNewPage } from "../../../../Store/dataThunks.js";
 
+const MAX_RESPONSE_LENGTH = 20;
 export default memo(function CardSwiper(props) {
+  const { sessionId } = useContext(UserContext);
   const favoriteData = useSelector((state) => state.data.favoriteData);
+  const dispatch = useDispatch();
+  const [page, setPage] = useState(1);
   const [toggle, setToggle] = useState(
     props.toggle ? props.toggle : props.type !== "list"
   );
@@ -18,10 +26,28 @@ export default memo(function CardSwiper(props) {
       return b[props.sort] - a[props.sort];
     });
   }
+  //---------------------------------------------
+  function loadNextPage() {
+    if (data?.length >= MAX_RESPONSE_LENGTH) {
+      setPage((old) => old + 1);
+    }
+  }
+  useEffect(() => {
+    if (page > 1) {
+      dispatch(
+        AddNewPage({
+          listId: props.ListId,
+          dataIndex: props.dataIndex,
+          page: page,
+          sessionId: sessionId,
+        })
+      );
+    }
+  }, [page]);
+  //---------------------------------------------
   function handleToggle() {
     setToggle((old) => !old);
   }
-
   const slides = data?.map((e) => {
     return (
       <SwiperSlide key={e.id + "/" + props.ListId}>
@@ -48,14 +74,7 @@ export default memo(function CardSwiper(props) {
     <>
       {data?.length >= 0 && (
         <header>
-          <label htmlFor={"toggle" + props.name}>
-            <h1 className="toggle">{toggle ? "-" : "+"}</h1>
-          </label>
-          <input
-            type="button"
-            id={"toggle" + props.name}
-            onClick={handleToggle}
-          />
+          <ToggleBtn {...props} toggle={toggle} handleToggle={handleToggle} />
           <h1>{props.name}</h1>
           {props.allowDelete && <DeleteIcon {...props} />}
         </header>
@@ -71,6 +90,7 @@ export default memo(function CardSwiper(props) {
             }
             navigation={true}
             slidesPerView="auto"
+            loadNextPage={loadNextPage}
           />
         </section>
       )}

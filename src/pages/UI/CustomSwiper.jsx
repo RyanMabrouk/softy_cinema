@@ -17,8 +17,8 @@ export default function CustomSwiper(props) {
       <Swiper
         // install Swiper modules
         modules={[Virtual, Pagination, Navigation]}
-        spaceBetween={props.spaceBetween?props.spaceBetween:35}
-        slidesPerView={props.slidesPerView? props.slidesPerView : 1}
+        spaceBetween={props.spaceBetween ? props.spaceBetween : 35}
+        slidesPerView={props.slidesPerView ? props.slidesPerView : 1}
         centeredSlides={props.centeredSlides}
         initialSlide={props.initialSlide ? props.initialSlide : 0} //virtual
         loop={props.loop}
@@ -33,6 +33,9 @@ export default function CustomSwiper(props) {
         allowTouchMove={props.allowTouchMove}
         //centeredSlidesBounds={true}
         observer={true}
+        onReachEnd={() => {
+          props.loadNextPage ? props.loadNextPage() : null;
+        }}
       >
         {props.slides}
       </Swiper>

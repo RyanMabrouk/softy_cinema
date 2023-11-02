@@ -8,6 +8,7 @@ import {
   createList,
   deleteList,
   updateList,
+  AddNewPage,
 } from "./dataThunks";
 
 const initialState = {
@@ -94,6 +95,32 @@ const dataSlice = createSlice({
           const index = state.listsData.findIndex((e) => e.id === payload.id);
           state.listsData[index] = payload;
         }
+      })
+      //-----------------------------------------
+      .addCase(AddNewPage.fulfilled, (state, { payload }) => {
+        if (payload) {
+          console.log("payload =");
+          console.log(payload);
+          if (payload.listId) {
+            const index = state.listsData.findIndex(
+              (e) => e.id === payload.listId
+            );
+            state.listsData[index].data.items = [
+              ...state.listsData[index].data.items,
+              ...payload.data,
+            ];
+          } else {
+            payload.dataIndex === "searchData"
+              ? (state[payload.dataIndex].data = [
+                  ...state[payload.dataIndex].data,
+                  ...payload.data,
+                ])
+              : (state[payload.dataIndex] = [
+                  ...state[payload.dataIndex],
+                  ...payload.data,
+                ]);
+          }
+        }
       }),
 });
 
@@ -106,6 +133,7 @@ export {
   createList,
   deleteList,
   updateList,
+  AddNewPage,
 };
 export const { clearSession } = dataSlice.actions;
 export default dataSlice.reducer;

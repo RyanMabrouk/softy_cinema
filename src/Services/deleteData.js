@@ -4,10 +4,7 @@ import api from "./axios.config";
 export default async function fetchData(path, sessionId = "") {
   const options = {
     method: "DELETE",
-    url: path,
-    params: {
-      sessionId: sessionId,
-    },
+    url: `${path + (sessionId && "?session_id=" + sessionId)}`,
   };
   return await api
     .request(options)

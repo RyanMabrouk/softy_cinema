@@ -14,6 +14,43 @@ async function fetchData(url, query = null, signal = null) {
     }
   }
 }
+async function loadAllFavorite(sessionId) {
+  let counter = 1;
+  let favoriteData = [];
+  while (true) {
+    let data = await fetchData(
+      `/account/20285930/favorite/movies?language=en-US&page=${counter}${
+        sessionId !== null ? "&session_id=" + sessionId : ""
+      }&sort_by=created_at.asc`
+    );
+    if (data?.length > 0) {
+      favoriteData = [...favoriteData, ...data];
+      counter++;
+    } else {
+      break;
+    }
+  }
+  return favoriteData;
+}
+async function loadAllRated(sessionId) {
+  let counter = 1;
+  let ratedData = [];
+  while (true) {
+    let data = await fetchData(
+      `/account/20285930/rated/movies?language=en-US&page=${counter}${
+        sessionId !== null ? "&session_id=" + sessionId : ""
+      }&sort_by=created_at.asc`
+    );
+    if (data?.length > 0) {
+      ratedData = [...ratedData, ...data];
+      counter++;
+    } else {
+      break;
+    }
+  }
+  return ratedData;
+}
+//---------------------------GET----------------------------
 const newQuery = createAsyncThunk(
   "data/newQuery",
   async (query, { signal }) => {
@@ -49,16 +86,8 @@ const newCardClicked = createAsyncThunk(
 const newSessionData = createAsyncThunk(
   "data/newSessionData",
   async (sessionId) => {
-    const favoriteData = await fetchData(
-      `/account/20285930/favorite/movies?language=en-US&page=1${
-        sessionId !== null ? "&session_id=" + sessionId : ""
-      }&sort_by=created_at.asc`
-    );
-    const ratedData = await fetchData(
-      `/account/20285930/rated/movies?language=en-US&page=1${
-        sessionId !== null ? "&session_id=" + sessionId : ""
-      }&sort_by=created_at.asc`
-    );
+    const favoriteData = await loadAllFavorite(sessionId);
+    const ratedData = await loadAllRated(sessionId);
     const listsData = await fetchData(
       `/account/20285930/lists?page=1&session_id=${
         sessionId !== null ? "&session_id=" + sessionId : ""
@@ -82,28 +111,6 @@ const newSessionData = createAsyncThunk(
     };
   }
 );
-const updateRated = createAsyncThunk("data/updateRated", async (sessionId) => {
-  const ratedData = await fetchData(
-    `/account/20285930/rated/movies?language=en-US&page=1${
-      sessionId !== null ? "&session_id=" + sessionId : ""
-    }&sort_by=created_at.asc`
-  );
-  return { ratedData: ratedData };
-});
-const upadateFavourite = createAsyncThunk(
-  "data/upadateFavourite",
-  async (sessionId) => {
-    const favoriteData = await fetchData(
-      `/account/20285930/favorite/movies?language=en-US&page=1${
-        sessionId !== null ? "&session_id=" + sessionId : ""
-      }&sort_by=created_at.asc`
-    );
-    return {
-      favoriteData: favoriteData,
-    };
-  }
-);
-
 const createList = createAsyncThunk(
   "data/createList",
   async ({ name, sessionId }) => {
@@ -123,6 +130,62 @@ const createList = createAsyncThunk(
     }
   }
 );
+const AddNewPage = createAsyncThunk(
+  "data/AddNewPage",
+  async ({ listId, dataIndex, page, sessionId }, { getState, signal }) => {
+    if (listId) {
+      const res = await fetchData(
+        `/list/${listId}?language=en-US&page=${page}`
+      );
+      if (res?.items.length > 0) {
+        console.log(res.items);
+        return {
+          listId: listId,
+          data: res.items,
+        };
+      } else {
+        return null;
+      }
+    } else {
+      const response = async () => {
+        switch (dataIndex) {
+          case "ratedData":
+            return await fetchData(
+              `/account/20285930/rated/movies?language=en-US&page=${page}${
+                sessionId !== null ? "&session_id=" + sessionId : ""
+              }&sort_by=created_at.asc`
+            );
+          case "favoriteData":
+            return await fetchData(
+              `/account/20285930/favorite/movies?language=en-US&page=${page}${
+                sessionId !== null ? "&session_id=" + sessionId : ""
+              }&sort_by=created_at.asc`
+            );
+          case "searchData":
+            const query = getState().data.query;
+            return await fetchData(
+              `/search/movie?query=${query}&include_adult=false&language=en-US&page=${page}`,
+              query,
+              signal
+            );
+          default:
+            null;
+        }
+      };
+      const data = await response();
+      if (data?.length > 0) {
+        console.log(data);
+        return {
+          dataIndex: dataIndex,
+          data: data,
+        };
+      } else {
+        return null;
+      }
+    }
+  }
+);
+//--------------------------DELETE-------------------------------------
 const deleteList = createAsyncThunk(
   "data/deleteList",
   async ({ id, sessionId }) => {
@@ -131,6 +194,20 @@ const deleteList = createAsyncThunk(
       console.log("list deleted");
       return id;
     }
+  }
+);
+//-----------------------------UPDATE----------------------------------
+const updateRated = createAsyncThunk("data/updateRated", async (sessionId) => {
+  const ratedData = await loadAllRated(sessionId);
+  return { ratedData: ratedData };
+});
+const upadateFavourite = createAsyncThunk(
+  "data/upadateFavourite",
+  async (sessionId) => {
+    const favoriteData = await loadAllFavorite(sessionId);
+    return {
+      favoriteData: favoriteData,
+    };
   }
 );
 const updateList = createAsyncThunk(
@@ -164,4 +241,5 @@ export {
   createList,
   deleteList,
   updateList,
+  AddNewPage,
 };
