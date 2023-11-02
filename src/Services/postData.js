@@ -1,23 +1,23 @@
-import { API_URL, AUTH_TOKEN } from "./constants";
+import { toast } from "react-toastify";
+import api from "./axios.config";
 
-export default async function postData(data, url, sessionId = "") {
+export default async function postData(payload, path, sessionId = "") {
   const options = {
     method: "POST",
-    headers: {
-      accept: "application/json",
-      "content-type": "application/json",
-      Authorization: `Bearer ${AUTH_TOKEN}`,
+    url: path,
+    params: {
+      sessionId: sessionId,
     },
-    body: JSON.stringify(data),
+    data: payload,
   };
-  try {
-    const res = await fetch(
-      `${API_URL}${url + (sessionId && "?session_id=" + sessionId)}`,
-      options
-    );
-    const response = await res.json();
-    return response;
-  } catch (err) {
-    console.error(err);
-  }
+  return await api
+    .request(options)
+    .then((response) => {
+      toast(response.data.status_message);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      toast.error(error.response?.data?.status_message || error.message);
+    });
 }

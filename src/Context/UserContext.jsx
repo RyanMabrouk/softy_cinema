@@ -6,7 +6,6 @@ export default UserContext;
 export function LoginContext(props) {
   const [sessionId, setSessionId] = useState(null);
   const [signup, setSignup] = useState(false);
-  const [popup, setPopup] = useState("");
   useEffect(() => {
     if (sessionId !== null) {
       localStorage.setItem("sessionId", JSON.stringify(sessionId));
@@ -14,7 +13,7 @@ export function LoginContext(props) {
   }, [sessionId]);
   return (
     <UserContext.Provider
-      value={{ sessionId, setSessionId, signup, setSignup, popup, setPopup }}
+      value={{ sessionId, setSessionId, signup, setSignup }}
     >
       {props.children}
     </UserContext.Provider>

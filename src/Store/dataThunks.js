@@ -10,12 +10,10 @@ async function fetchData(url, query = null, signal = null) {
       data = await getData(url, signal);
       return data;
     } catch (err) {
-      console.error(err);
       return null;
     }
   }
 }
-
 const newQuery = createAsyncThunk(
   "data/newQuery",
   async (query, { signal }) => {
@@ -115,16 +113,13 @@ const createList = createAsyncThunk(
       language: "en",
     };
     const res = await postData(API_PAYLOAD, `/list?session_id=${sessionId}`);
-    if (res.success) {
+    if (res?.success) {
       console.log("list created");
       return {
         id: res.list_id,
         name: name,
         data: [],
       };
-    } else {
-      alert(res.status_message || res.errors);
-      return null;
     }
   }
 );
@@ -132,12 +127,9 @@ const deleteList = createAsyncThunk(
   "data/deleteList",
   async ({ id, sessionId }) => {
     const res = await deleteData(`/list/${id}?session_id=${sessionId}`);
-    if (res.success) {
+    if (res?.success) {
       console.log("list deleted");
       return id;
-    } else {
-      alert(res.status_message || res.errors);
-      return null;
     }
   }
 );
@@ -152,7 +144,7 @@ const updateList = createAsyncThunk(
       API_PAYLOAD,
       `/list/${listId}/${ACTION}?session_id=${sessionId}`
     );
-    if (res.success) {
+    if (res?.success) {
       console.log("list updated");
       const data = await fetchData(`/list/${listId}?language=en-US`);
       return {
@@ -160,13 +152,9 @@ const updateList = createAsyncThunk(
         name: data.name,
         data: data,
       };
-    } else {
-      alert(res.status_message || res.errors);
-      return null;
     }
   }
 );
-
 export {
   newCardClicked,
   newQuery,

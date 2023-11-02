@@ -1,20 +1,23 @@
-import { API_URL, AUTH_TOKEN } from "./constants";
+import { toast } from "react-toastify";
+import api from "./axios.config";
 
 export default async function getData(path, signal) {
   const options = {
     method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${AUTH_TOKEN}`,
-    },
+    url: path,
     signal: signal,
   };
-  try {
-    const res = await fetch(`${API_URL}${path}`, options);
-    const response = await res.json();
-    const data = await response;
-    return data.results ? data.results : data;
-  } catch (err) {
-    console.error(err);
-  }
+  return await api
+    .request(options)
+    .then((response) => {
+      return response.data.results || response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      toast.error(
+        error.response?.data?.status_message ||
+          (error.message !== "canceled" && error.message)
+      );
+      return null;
+    });
 }

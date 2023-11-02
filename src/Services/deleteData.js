@@ -1,22 +1,22 @@
-import { API_URL, AUTH_TOKEN } from "./constants";
+import { toast } from "react-toastify";
+import api from "./axios.config";
 
-const options = {
-  method: "DELETE",
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer ${AUTH_TOKEN}`,
-  },
-};
 export default async function fetchData(path, sessionId = "") {
-  try {
-    const res = await fetch(
-      `${API_URL}${path + (sessionId && "?session_id=" + sessionId)}`,
-      options
-    );
-    const response = await res.json();
-    const data = await response;
-    return data.results ? data.results : data;
-  } catch (err) {
-    console.error(err);
-    }
+  const options = {
+    method: "DELETE",
+    url: path,
+    params: {
+      sessionId: sessionId,
+    },
+  };
+  return await api
+    .request(options)
+    .then((response) => {
+      toast(response.data.status_message);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      toast.error(error.response?.data?.status_message || error.message);
+    });
 }

@@ -5,6 +5,7 @@ import store from "./Store/store.js";
 import { Provider } from "react-redux";
 import { ProtectedRoute } from "./pages/UI/ProtectedRoute.jsx";
 import Loader from "./pages/UI/Loader.jsx";
+import { Toaster } from "./pages/UI/Toaster.jsx";
 const Login = lazy(() => import("./pages/LoginPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 
@@ -34,6 +35,7 @@ export default function App() {
       <Provider store={store}>
         <LoginContext>
           <RouterProvider router={router} />
+          <Toaster />
         </LoginContext>
       </Provider>
     </div>

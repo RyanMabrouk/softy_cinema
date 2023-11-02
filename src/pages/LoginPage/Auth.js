@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { LOCAL_LINK, WEB_LINK } from "../../Services/constants";
 import getData from "../../Services/getData";
 import postData from "../../Services/postData";
@@ -5,7 +6,7 @@ import postData from "../../Services/postData";
 export async function logIn(user, password) {
   try {
     const res = await getData(`/authentication/token/new`);
-    if (res.success) {
+    if (res?.success) {
       const PAYLOAD = {
         username: user,
         password: password,
@@ -15,38 +16,26 @@ export async function logIn(user, password) {
         PAYLOAD,
         `/authentication/token/validate_with_login`
       );
-      if (validation.success) {
+      if (validation?.success) {
         const session_id = await generateSession(res.request_token);
         if (session_id) {
           return session_id;
         }
-      } else {
-        alert("User Error : " + validation.status_message);
       }
-    } else {
-      console.log(res.status_message);
-      alert(
-        "Somthing went wrong please try again later or login with a guest account"
-      );
     }
   } catch (err) {
-    console.error(err);
+    toast.error("Somthing went wrong please contact support!");
   }
 }
 
 export async function generateToken() {
   try {
     const res = await getData(`/authentication/token/new`);
-    if (res.success) {
+    if (res?.success) {
       return res.request_token;
-    } else {
-      console.log(res.status_message);
-      alert(
-        "Somthing went wrong please try again later or login with a guest account"
-      );
     }
   } catch (err) {
-    console.error(err);
+    toast.error("Somthing went wrong please contact support!");
   }
 }
 
@@ -58,7 +47,7 @@ export async function authToken() {
       redirect_to=${WEB_LINK}`;
     }
   } catch (err) {
-    console.error(err);
+    toast.error("Somthing went wrong please contact support!");
   }
 }
 
@@ -68,22 +57,21 @@ export async function generateSession(TOKEN) {
       request_token: TOKEN,
     };
     const res = await postData(TOKEN_PAYLOAD, `/authentication/session/new`);
-    if (res.success) {
+    if (res?.success) {
       return res.session_id;
     }
   } catch (err) {
-    console.error(err);
+    toast.error("Somthing went wrong please contact support!");
   }
 }
 export async function generateGuest() {
   try {
     const res = await getData(`/authentication/guest_session/new`);
-    if (res.success) {
+    if (res?.success) {
       return res.guest_session_id;
     }
   } catch (err) {
-    alert("Somthing went wrong please contact support!");
-    console.error(err);
+    toast.error("Somthing went wrong please contact support!");
   }
 }
 export function logOut() {

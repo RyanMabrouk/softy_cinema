@@ -41,7 +41,7 @@ export default function Card(props) {
       `/account/20285930/favorite`,
       sessionId
     );
-    if (res.success) {
+    if (res?.success) {
       setWatched(action);
       await dispatch(upadateFavourite(sessionId));
     }
@@ -54,9 +54,6 @@ export default function Card(props) {
       } else {
         await toggleFavorite(action);
       }
-    } catch (err) {
-      console.error(err);
-      console.log("Failed Action");
     } finally {
       setLoading(false);
     }

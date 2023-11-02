@@ -12,11 +12,9 @@ export function Rating(props) {
     props.setLoading(true);
     try {
       const res = await deleteData(`/movie/${props.id}/rating`, sessionId);
-      if (res.success) {
+      if (res?.success) {
         setTimeout(() => dispatch(updateRated(sessionId)), 1000);
       }
-    } catch (err) {
-      console.error(err);
     } finally {
       props.setLoading(false);
     }

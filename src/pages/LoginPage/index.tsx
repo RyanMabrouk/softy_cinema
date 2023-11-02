@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import UserContext from "../../Context/UserContext";
-import { useNavigate, useNavigation } from "react-router-dom";
-import Loader from "../UI/Loader";
+import { useNavigate } from "react-router-dom";
 import Form from "./componants/Form";
 
 export default function LogIn() {

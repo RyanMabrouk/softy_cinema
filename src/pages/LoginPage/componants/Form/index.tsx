@@ -7,6 +7,7 @@ import { SignUpOption } from "./SignUpOption";
 import { FormHeader } from "./FormHeader";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 
 const MAXIMUM_PASSWORD_LENGTH = 30;
 const MINIMUM_PASSWORD_LENGTH = 6;
@@ -35,7 +36,7 @@ export const loginValidationSchema = () => {
   });
 };
 export default function Form() {
-  const { signup, setSessionId, setPopup } = useContext(UserContext);
+  const { signup, setSessionId } = useContext(UserContext);
   const navigate = useNavigate();
   const [validation] = useSearchParams();
   //----------------Ridirect Sign-in-----------------------
@@ -46,7 +47,7 @@ export default function Form() {
           validation.get("request_token")
         );
         if (session_id) {
-          setPopup("Welcome to SoftyCinema .!");
+          toast("Welcome to SoftyCinema .!");
           setSessionId(session_id);
           navigate("/Home");
         }
@@ -58,7 +59,7 @@ export default function Form() {
   async function handleGuest() {
     const geuest_id = await generateGuest();
     //to do -> use guest id
-    setPopup("Welcome Guest .!");
+    toast("Welcome Guest .!");
     setSessionId("");
     navigate("/Home");
   }
@@ -67,7 +68,7 @@ export default function Form() {
     const { user, password } = loginFormikForm.values;
     const res = await logIn(user, password);
     if (res) {
-      setPopup(`Welcome Back ${user} .!`);
+      toast(`Welcome Back ${user} .!`);
       setSessionId(res);
       navigate("/Home");
     }
