@@ -11,11 +11,6 @@ export function ProtectedRoute({ children }) {
   useEffect(() => {
     setSessionId(JSON.parse(localStorage.getItem("sessionId")));
   }, []);
-  useEffect(() => {
-    if (sessionId || sessionId === "") {
-      dispatch(newSessionData(sessionId));
-    }
-  }, [sessionId]);
   if (sessionId === null) {
     dispatch(clearSession());
     return <Navigate to="/" state={{ from: location }} replace />;
