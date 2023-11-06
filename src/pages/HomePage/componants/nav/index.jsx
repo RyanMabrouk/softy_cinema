@@ -45,7 +45,7 @@ export default function Nav() {
               Found<span> {searchData ? searchData.length : 0} </span>results
             </>
           )}
-          <img src={thunder} />
+          <img src={thunder} alt="" />
         </div>
         <button
           className="logout"
