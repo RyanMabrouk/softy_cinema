@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Details from "../details";
 import CardsSwiper from "./CardsSwiper";
 import { useSelector } from "react-redux";
@@ -13,12 +13,16 @@ export default function Main() {
   const { id: cardClicked, loading } = useSelector(
     (state) => state.data.cardClicked
   );
+  const ratedDataCopy = useMemo(() => ratedData, [ratedData]);
+  const searchDataCopy = useMemo(() => searchData, [searchData]);
+  const favoriteDataCopy = useMemo(() => favoriteData, [favoriteData]);
+  const listsDataCopy = useMemo(() => listsData, [listsData]);
   return (
     <main>
       <CardsSwiper
         key={1}
         name={"Movies"}
-        data={searchData}
+        data={searchDataCopy}
         dataIndex={"searchData"}
         sort={/*"popularity"*/ false}
         type={"search"}
@@ -26,7 +30,7 @@ export default function Main() {
       <CardsSwiper
         key={2}
         name={"Favorite"}
-        data={favoriteData}
+        data={favoriteDataCopy}
         dataIndex={"favoriteData"}
         sort={false}
         type={"list"}
@@ -35,14 +39,14 @@ export default function Main() {
       <CardsSwiper
         key={3}
         name={"Rated Movies"}
-        data={ratedData}
+        data={ratedDataCopy}
         dataIndex={"ratedData"}
         sort={"rating"}
         type={"list"}
         toggle={true}
       />
       <section className="user_lists">
-        {listsData?.map((e, i) => {
+        {listsDataCopy?.map((e, i) => {
           return (
             <CardsSwiper
               key={e.id}

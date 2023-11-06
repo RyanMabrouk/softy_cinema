@@ -7,7 +7,6 @@ import { SearchMessage } from "./SearchMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteIcon } from "./DeleteIcon.jsx";
 import { ToggleBtn } from "./ToggleBtn.jsx";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import UserContext from "../../../../Context/UserContext.jsx";
 import { AddNewPage } from "../../../../Store/dataThunks.js";
 
