@@ -71,7 +71,7 @@ export default function Card(props) {
               <div className="title">{props.title}</div>
             </Tooltip>
             <div className="rating">
-              <img src={star} alt="" />
+              <img src={star} alt="" fetchpriority="low" />
               {props.rating}
             </div>
             <div>
@@ -81,11 +81,11 @@ export default function Card(props) {
           <Poster {...props} setLoading={setLoading} />
           <div className="popularity_date_container">
             <div className="popularity">
-              <img src={group} alt="" />
+              <img src={group} alt="" fetchpriority="low" />
               {props.popularity}
             </div>
             <div className="date">
-              <img src={date} alt="" />
+              <img src={date} alt="" fetchpriority="low" />
               {props.date}
             </div>
           </div>

@@ -33,6 +33,7 @@ export function Poster(props) {
           }}
           src={currentImage}
           alt=""
+          fetchpriority="low"
         />
         {props.userRating && (
           <Rating {...props} setLoading={props.setLoading} />
