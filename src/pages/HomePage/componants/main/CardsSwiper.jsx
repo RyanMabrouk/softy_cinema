@@ -71,7 +71,7 @@ export default memo(function CardSwiper(props) {
   });
   return (
     <>
-      {data?.length >= 0 && (
+      {data?.length >  0 && (
         <header>
           <ToggleBtn {...props} toggle={toggle} handleToggle={handleToggle} />
           <h1>{props.name}</h1>

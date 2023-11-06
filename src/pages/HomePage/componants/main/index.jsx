@@ -59,7 +59,7 @@ export default function Main() {
             />
           );
         })}
-        <AddListInput />
+        {listsData?.length > 0 && <AddListInput />}
       </section>
       {loading ? (
         <Loader className="details_loader" />

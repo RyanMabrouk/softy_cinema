@@ -3,6 +3,7 @@ import getData from "../Services/getData";
 import postData from "../Services/postData";
 import deleteData from "../Services/deleteData";
 
+const MAX_RESULT_LENGTH = 20;
 async function fetchData(url, query = null, signal = null) {
   let data = null;
   if (query !== "") {
@@ -25,7 +26,11 @@ async function loadAllFavorite(sessionId) {
     );
     if (data?.length > 0) {
       favoriteData = [...favoriteData, ...data];
-      counter++;
+      if (data?.length === MAX_RESULT_LENGTH) {
+        counter++;
+      } else {
+        break;
+      }
     } else {
       break;
     }
@@ -43,7 +48,11 @@ async function loadAllRated(sessionId) {
     );
     if (data?.length > 0) {
       ratedData = [...ratedData, ...data];
-      counter++;
+      if (data?.length === MAX_RESULT_LENGTH) {
+        counter++;
+      } else {
+        break;
+      }
     } else {
       break;
     }
