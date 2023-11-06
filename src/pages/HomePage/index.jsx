@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../UI/Loader";
 const Main = lazy(() => import("./componants/main"));
 const Nav = lazy(() => import("./componants/nav"));
 
