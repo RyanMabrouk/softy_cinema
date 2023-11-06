@@ -7,7 +7,9 @@ export default function HomePage() {
   return (
     <>
       <Nav />
-      <Main />
+      <Suspanse fallback={<Loader className="home_loader" />}>
+        <Main />
+      </Suspanse>
     </>
   );
 }
